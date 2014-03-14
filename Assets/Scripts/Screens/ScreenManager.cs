@@ -20,6 +20,7 @@ public class ScreenManager : MonoBehaviour {
 	
 	public void OpenMainScreen() {
 		if (mainScreenScript == null) {
+		  GameManager.started = false;
 			GameObject tempGameObject = NGUITools.AddChild(parent, mainScreenPrefab);
 			tempGameObject.name = "MainScreen";
 			mainScreenScript = tempGameObject.GetComponent<MainScreen>();

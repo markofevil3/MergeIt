@@ -14,6 +14,7 @@ public class Grid : MonoBehaviour {
     this.x = pos.x;
     this.y = pos.y;
     this.gridValue = gridValue;
+    background.width = background.height = GameManager.Instance.cellSize;
   }
   
   public bool IsAvailable() {

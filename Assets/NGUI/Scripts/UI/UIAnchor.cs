@@ -73,6 +73,12 @@ public class UIAnchor : MonoBehaviour
 	UIRoot mRoot;
 	bool mStarted = false;
 
+  public void Init() {
+		Awake();
+		enabled = true;
+		Start();
+	}
+
 	void Awake ()
 	{
 		mTrans = transform;

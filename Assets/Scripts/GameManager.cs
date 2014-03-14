@@ -5,6 +5,9 @@ using System.Globalization;
 
 public class GameManager : BaseScreen {
   
+  public static bool started = false;
+  public static bool paused = false;
+  
   private int gameSize = 4;
   private int startTiles = 2;
 	private int wonTileValue = 2048;
@@ -13,7 +16,11 @@ public class GameManager : BaseScreen {
   // public GridManager gridManager;
   // public TileManager tileManager;
 	public UISprite cellBackground;
+	public UIStretch cellBackgroundStretch;
+	public UIAnchor cellTableAnchor;
+	public int cellSize;
 	public UILabel scoreLabel;
+	public UIEventTrigger btnPause;
   public static GameManager Instance { get; private set; }
   
 	public enum Direction {
@@ -25,12 +32,28 @@ public class GameManager : BaseScreen {
   
 	public override void Init() {
 		Instance = this;
+    cellBackgroundStretch.Reset();
+    cellTableAnchor.Init();
+		cellSize = cellBackground.width * 100 / 486;
 		transform.GetComponent<GridManager>().Init(gameSize);
 		transform.GetComponent<TileManager>().Init();
-    // GridManager.Instance.Init(gameSize);
+		EventDelegate.Set (btnPause.onClick, OpenPausePopup);
+		
     AddStartTiles();
 		score = 0;
+		started = true;
 	}
+  
+  private void OpenPausePopup() {
+    PopupManager.Instance.OpenPopup(PopupManager.Type.PAUSE);
+  }
+  
+  public override void Close() {
+    started = false;
+    paused = false;
+    ScreenManager.Instance.gameManagerScript = null;
+    base.Close();
+  }
   
 	// void Start() {
 	// 

@@ -117,6 +117,12 @@ public class UIStretch : MonoBehaviour
 		mStarted = true;
 	}
 
+  public void Reset() {
+		enabled = true;
+		Awake();
+		Start();
+	}
+
 	void Update ()
 	{
 		if (mAnim != null && mAnim.isPlaying) return;

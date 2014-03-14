@@ -74,22 +74,24 @@ public class PlayerController : MonoBehaviour {
 	}
 
   void Update() {
-		#if UNITY_EDITOR
-			MouseSwipe();
-			if(Input.GetButtonDown("up")){
-			  GameManager.Instance.Move(GameManager.Direction.UP);
-			}
-			if(Input.GetButtonDown("down")){
-			  GameManager.Instance.Move(GameManager.Direction.DOWN);
-			}
-			if(Input.GetButtonDown("left")){
-			  GameManager.Instance.Move(GameManager.Direction.LEFT);
-			}
-			if(Input.GetButtonDown("right")){
-			  GameManager.Instance.Move(GameManager.Direction.RIGHT);
-			}
-		#else
-			TouchSwipe();
-		#endif
+    if (GameManager.started && !GameManager.paused) {
+	    #if UNITY_EDITOR
+  			MouseSwipe();
+  			if(Input.GetButtonDown("up")){
+  			  GameManager.Instance.Move(GameManager.Direction.UP);
+  			}
+  			if(Input.GetButtonDown("down")){
+  			  GameManager.Instance.Move(GameManager.Direction.DOWN);
+  			}
+  			if(Input.GetButtonDown("left")){
+  			  GameManager.Instance.Move(GameManager.Direction.LEFT);
+  			}
+  			if(Input.GetButtonDown("right")){
+  			  GameManager.Instance.Move(GameManager.Direction.RIGHT);
+  			}
+  		#else
+  			TouchSwipe();
+  		#endif
+	  }
   }
 }

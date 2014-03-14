@@ -10,12 +10,15 @@ public class Tile : MonoBehaviour {
   public Position previousPosition;
   
   public UILabel tileValueLabel;
+  public UISprite tileBackground;
 
   public void Init(Position pos, int value, Vector3 transPos) {
     this.x = pos.x;
     this.y = pos.y;
     this.tileValue = value;
-    tileValueLabel.text = value.ToString();
+    tileBackground.spriteName = "tileTheme1_" + value;
+    tileBackground.width = tileBackground.height = GameManager.Instance.cellSize;
+    // tileValueLabel.text = value.ToString();
     transform.position = transPos;
   }
   
@@ -35,7 +38,8 @@ public class Tile : MonoBehaviour {
     x = pos.x;
     y = pos.y;
     tileValue = value;
-    tileValueLabel.text = value.ToString();
+    tileBackground.spriteName = "tileTheme1_" + value;
+    // tileValueLabel.text = value.ToString();
     LeanTween.move(gameObject, GridManager.Instance.GetCell(pos).thisTransform.position, 0.1f);
     
     // transform.position = GameManager.Instance.gridManager.GetCell(pos).thisTransform.position;
