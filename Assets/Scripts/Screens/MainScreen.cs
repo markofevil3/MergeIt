@@ -11,6 +11,7 @@ public class MainScreen : BaseScreen {
 	
 	void OpenGameScreen() {
 		Close();
+		ScreenManager.Instance.mainScreenScript = null;
 		ScreenManager.Instance.OpenGameScreen();
 	}
 	

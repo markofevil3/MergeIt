@@ -8,6 +8,9 @@ public class ScreenManager : MonoBehaviour {
 	public GameObject parent;
 	public GameObject mainScreenPrefab;
 	public GameObject inGameSreenPrefab;
+	
+	public MainScreen mainScreenScript;
+	public GameManager gameManagerScript;
 
 	// Use this for initialization
 	void Awake () {
@@ -16,14 +19,20 @@ public class ScreenManager : MonoBehaviour {
 	}
 	
 	public void OpenMainScreen() {
-		GameObject tempGameObject = NGUITools.AddChild(parent, mainScreenPrefab);
-		tempGameObject.name = "MainScreen";
-		tempGameObject.GetComponent<BaseScreen>().Init();
+		if (mainScreenScript == null) {
+			GameObject tempGameObject = NGUITools.AddChild(parent, mainScreenPrefab);
+			tempGameObject.name = "MainScreen";
+			mainScreenScript = tempGameObject.GetComponent<MainScreen>();
+			mainScreenScript.Init();
+		}
 	}
 	
 	public void OpenGameScreen() {
-		GameObject tempGameObject = NGUITools.AddChild(parent, inGameSreenPrefab);
-		tempGameObject.name = "InGameSreen";
-		tempGameObject.GetComponent<BaseScreen>().Init();
+		if (gameManagerScript == null) {
+			GameObject tempGameObject = NGUITools.AddChild(parent, inGameSreenPrefab);
+			tempGameObject.name = "InGameSreen";
+			gameManagerScript = tempGameObject.GetComponent<GameManager>();
+			gameManagerScript.Init();
+		}
 	}
 }
