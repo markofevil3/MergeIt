@@ -3,13 +3,16 @@ using System;
 using System.Collections;
 using System.Globalization;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : BaseScreen {
   
   private int gameSize = 4;
   private int startTiles = 2;
+	private int wonTileValue = 2048;
+	private int score;
   
-  public GridManager gridManager;
-  public TileManager tileManager;
+  // public GridManager gridManager;
+  // public TileManager tileManager;
+	public UILabel scoreLabel;
   public static GameManager Instance { get; private set; }
   
 	public enum Direction {
@@ -19,10 +22,15 @@ public class GameManager : MonoBehaviour {
     RIGHT
   }
   
-  void Start() {
+	public override void Init() {}
+  
+	void Start() {
     Instance = this;
-    gridManager.Init(gameSize);
+		transform.GetComponent<GridManager>().Init(gameSize);
+		transform.GetComponent<TileManager>().Init();
+    // GridManager.Instance.Init(gameSize);
     AddStartTiles();
+		score = 0;
   }
   
   void AddStartTiles() {
@@ -32,35 +40,37 @@ public class GameManager : MonoBehaviour {
   }
   
   void AddRandomTile() {
-    if (gridManager.IsCellsAvailable()) {
+    if (GridManager.Instance.IsCellsAvailable()) {
       int tileValue = UnityEngine.Random.value < 0.9 ? 2 : 4;
-      Grid tempGrid = gridManager.RandomAvailableCell();
-      tileManager.CreateNewTile(new Position(tempGrid.x, tempGrid.y), tileValue, tempGrid.thisTransform.position);
+      Grid tempGrid = GridManager.Instance.RandomAvailableCell();
+      TileManager.Instance.CreateNewTile(new Position(tempGrid.x, tempGrid.y), tileValue, tempGrid.thisTransform.position);
       // var tile = new Tile(this.grid.randomAvailableCell(), value);
-      gridManager.InsertTile(tempGrid, tileValue);
+      GridManager.Instance.InsertTile(tempGrid, tileValue);
     }
   }
   
   public void Move(Direction direction) {
-    Debug.Log("move " + direction);
-    
     DirectionVector vector = MapDirectionToVector(direction);
     int[][] traversals = BuildTraversals(vector);
     bool moved      = false;
     
-    tileManager.ResetAllTilesData();
+    TileManager.Instance.ResetAllTilesData();
     foreach (int x in traversals[0]) {
       foreach (int y in traversals[1]) {
-        Tile tile = gridManager.GetCellContent(new Position(x, y));
+        Tile tile = GridManager.Instance.GetCellContent(new Position(x, y));
         if (tile != null) {
           Position[] positions = FindFarthestPosition(new Position(tile.x, tile.y), vector);
-          Tile nextTile = gridManager.GetCellContent(new Position(positions[1].x, positions[1].y));
+          Tile nextTile = GridManager.Instance.GetCellContent(new Position(positions[1].x, positions[1].y));
           if (nextTile != null && nextTile.tileValue == tile.tileValue && nextTile.mergeFromTile == null) {
-            Debug.Log("Merge " + tile.x + " " + tile.y);
-            gridManager.InsertTile(gridManager.GetCell(new Position(nextTile.x, nextTile.y)), nextTile.tileValue * 2);
-            gridManager.RemoveTile(gridManager.GetCell(new Position(tile.x, tile.y)));
+            GridManager.Instance.InsertTile(GridManager.Instance.GetCell(new Position(nextTile.x, nextTile.y)), nextTile.tileValue * 2);
+            GridManager.Instance.RemoveTile(GridManager.Instance.GetCell(new Position(tile.x, tile.y)));
             tile.GetMerge(new Position(nextTile.x, nextTile.y), nextTile.tileValue * 2, nextTile);
-            tileManager.RemoveTile(nextTile);
+            TileManager.Instance.RemoveTile(nextTile);
+						score += tile.tileValue;
+						scoreLabel.text = "Score: " + score;
+						if (tile.tileValue == wonTileValue) {
+							Debug.Log("WON");
+						}
           } else {
             MoveTile(tile, positions[0]);
           }
@@ -71,13 +81,14 @@ public class GameManager : MonoBehaviour {
       }
     }
     if (moved) {
-      AddRandomTile();
+			Invoke("AddRandomTile", 0.1f);
+      // AddRandomTile();
     }
   }
   
   private void MoveTile(Tile tile, Position pos) {
-    gridManager.SetCellValue(new Position(tile.x, tile.y), 0);
-    gridManager.SetCellValue(pos, tile.tileValue);
+    GridManager.Instance.SetCellValue(new Position(tile.x, tile.y), 0);
+    GridManager.Instance.SetCellValue(pos, tile.tileValue);
     tile.UpdatePosition(pos);
   }
   
@@ -93,8 +104,8 @@ public class GameManager : MonoBehaviour {
       previous = cellPos;
       cellPos.x = previous.x + vector.x;
       cellPos.y = previous.y + vector.y;
-    } while (gridManager.WithinBounds(cellPos) &&
-             gridManager.CellAvailable(cellPos));
+    } while (GridManager.Instance.WithinBounds(cellPos) &&
+             GridManager.Instance.CellAvailable(cellPos));
     return new Position[2] {previous, cellPos};
   }
   

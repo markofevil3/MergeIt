@@ -6,9 +6,14 @@ public class TileManager : MonoBehaviour {
   
   public GameObject tilePrefab;
   public GameObject listTilesPrefab;
-  
   public List<Tile> allTiles = new List<Tile>();
   
+  public static TileManager Instance { get; private set; }
+
+	public void Init() {
+		Instance = this;
+	}
+
   public Tile GetCreateNewTile(Position pos, int tileValue, Vector3 transPos) {
     GameObject tempTileGameObject = NGUITools.AddChild(listTilesPrefab, tilePrefab);
     Tile tempTile = tempTileGameObject.GetComponent<Tile>();

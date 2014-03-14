@@ -6,12 +6,14 @@ public class GridManager : MonoBehaviour {
 
   public UITable cellTable;
   public GameObject cellPrefab;
-  public TileManager tileManager;
+
+  public static GridManager Instance { get; private set; }
   
   private int size;
   private Grid[,] cells;
   
   public void Init(int size) {
+		Instance = this;
     this.size = size;
     cells = new Grid[size, size];
     for (int i = 0; i < size; i++) {
@@ -62,7 +64,7 @@ public class GridManager : MonoBehaviour {
   }
   
   public Tile GetCellContent(Position pos) {
-    return tileManager.GetTileAtPos(pos);
+    return TileManager.Instance.GetTileAtPos(pos);
   }
   
   public void SetCellValue(Position pos, int value) {

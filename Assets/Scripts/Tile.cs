@@ -26,8 +26,7 @@ public class Tile : MonoBehaviour {
   public void UpdatePosition(Position pos) {
     x = pos.x;
     y = pos.y;
-    Debug.Log(pos.x + " " + pos.y);
-    LeanTween.move(gameObject, GameManager.Instance.gridManager.GetCell(pos).thisTransform.position, 0.1f);
+    LeanTween.move(gameObject, GridManager.Instance.GetCell(pos).thisTransform.position, 0.1f);
     // transform.position = GameManager.Instance.gridManager.GetCell(pos).thisTransform.position;
   }
   
@@ -37,7 +36,7 @@ public class Tile : MonoBehaviour {
     y = pos.y;
     tileValue = value;
     tileValueLabel.text = value.ToString();
-    LeanTween.move(gameObject, GameManager.Instance.gridManager.GetCell(pos).thisTransform.position, 0.1f);
+    LeanTween.move(gameObject, GridManager.Instance.GetCell(pos).thisTransform.position, 0.1f);
     
     // transform.position = GameManager.Instance.gridManager.GetCell(pos).thisTransform.position;
   }

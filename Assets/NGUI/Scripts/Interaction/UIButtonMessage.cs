@@ -24,6 +24,7 @@ public class UIButtonMessage : MonoBehaviour
 
 	public GameObject target;
 	public string functionName;
+	public object[] inputParams = null;
 	public Trigger trigger = Trigger.OnClick;
 	public bool includeChildren = false;
 
@@ -64,21 +65,28 @@ public class UIButtonMessage : MonoBehaviour
 	void Send ()
 	{
 		if (string.IsNullOrEmpty(functionName)) return;
-		if (target == null) target = gameObject;
+    if (target == null) target = gameObject;
+    if (includeChildren)
+    {
+      Transform[] transforms = target.GetComponentsInChildren<Transform>();
 
-		if (includeChildren)
-		{
-			Transform[] transforms = target.GetComponentsInChildren<Transform>();
-
-			for (int i = 0, imax = transforms.Length; i < imax; ++i)
-			{
-				Transform t = transforms[i];
-				t.gameObject.SendMessage(functionName, gameObject, SendMessageOptions.DontRequireReceiver);
-			}
-		}
-		else
-		{
-			target.SendMessage(functionName, gameObject, SendMessageOptions.DontRequireReceiver);
-		}
+      for (int i = 0, imax = transforms.Length; i < imax; ++i)
+      {
+        Transform t = transforms[i];
+         if (inputParams == null) {
+           t.gameObject.SendMessage(functionName, gameObject, SendMessageOptions.DontRequireReceiver);
+         } else {
+           t.gameObject.SendMessage(functionName, this, SendMessageOptions.DontRequireReceiver);
+         }
+      }
+    }
+    else
+    {
+	    if (inputParams == null) {
+	      target.SendMessage(functionName, gameObject, SendMessageOptions.DontRequireReceiver);
+	    } else {
+	      target.SendMessage(functionName, this, SendMessageOptions.DontRequireReceiver);
+	    }
+    }
 	}
 }
