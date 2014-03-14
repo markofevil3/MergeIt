@@ -7,6 +7,7 @@ public class Grid : MonoBehaviour {
   public int y;
   public int gridValue;
   public Transform thisTransform;
+	public UISprite background;
   
   public void Init(Position pos, int gridValue) {
     thisTransform = transform;

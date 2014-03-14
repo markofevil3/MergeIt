@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// with rows and columns automatically adjusting their size to fit their content
 /// (think "table" tag in HTML).
 /// </summary>
-
+[ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/Table")]
 public class UITable : UIWidgetContainer
 {
@@ -69,6 +69,8 @@ public class UITable : UIWidgetContainer
 	protected bool mInitDone = false;
 	protected bool mReposition = false;
 	protected List<Transform> mChildren = new List<Transform>();
+
+	public bool doRepositionNow = false;
 
 	/// <summary>
 	/// Reposition the children on the next Update().
@@ -251,6 +253,10 @@ public class UITable : UIWidgetContainer
 
 	protected virtual void LateUpdate ()
 	{
+		if (doRepositionNow) {
+			Reset();
+			doRepositionNow = false;
+		}
 		if (mReposition) Reposition();
 		enabled = false;
 	}

@@ -12,6 +12,7 @@ public class GameManager : BaseScreen {
   
   // public GridManager gridManager;
   // public TileManager tileManager;
+	public UISprite cellBackground;
 	public UILabel scoreLabel;
   public static GameManager Instance { get; private set; }
   
@@ -22,16 +23,18 @@ public class GameManager : BaseScreen {
     RIGHT
   }
   
-	public override void Init() {}
-  
-	void Start() {
-    Instance = this;
+	public override void Init() {
+		Instance = this;
 		transform.GetComponent<GridManager>().Init(gameSize);
 		transform.GetComponent<TileManager>().Init();
     // GridManager.Instance.Init(gameSize);
     AddStartTiles();
 		score = 0;
-  }
+	}
+  
+	// void Start() {
+	// 
+	//   }
   
   void AddStartTiles() {
     for(int i = 0; i < startTiles; i++) {
@@ -67,7 +70,7 @@ public class GameManager : BaseScreen {
             tile.GetMerge(new Position(nextTile.x, nextTile.y), nextTile.tileValue * 2, nextTile);
             TileManager.Instance.RemoveTile(nextTile);
 						score += tile.tileValue;
-						scoreLabel.text = "Score: " + score;
+						scoreLabel.text = score.ToString();
 						if (tile.tileValue == wonTileValue) {
 							Debug.Log("WON");
 						}
