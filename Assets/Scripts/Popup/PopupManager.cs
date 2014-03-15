@@ -4,7 +4,8 @@ using System.Collections;
 public class PopupManager : MonoBehaviour {
 
   public enum Type {
-    PAUSE
+    PAUSE,
+    RESULT
   }
   private float dimAnimateSpeed = 0.1f;
   public static PopupManager Instance { get; private set; }
@@ -12,8 +13,10 @@ public class PopupManager : MonoBehaviour {
   public GameObject dimBackground;
   public UISprite dimBackgroundSprite;
   public GameObject pausePopupPrefab;
+  public GameObject resultPopupPrefab;
 	
 	public PausePopup pausePopupScript;
+	public ResultPopup resultPopupScript;
 	
 	// Use this for initialization
 	void Awake () {
@@ -49,7 +52,7 @@ public class PopupManager : MonoBehaviour {
     dimBackground.SetActive(false);
   }
   
-  public void OpenPopup(Type type) {
+  public void OpenPopup(Type type, object[] data = null) {
     switch(type) {
       case Type.PAUSE:
         if (pausePopupScript == null) {
@@ -58,6 +61,15 @@ public class PopupManager : MonoBehaviour {
     			pausePopupScript = tempGameObject.GetComponent<PausePopup>();
     			pausePopupScript.Init();
     			pausePopupScript.Open();
+    		}
+      break;
+      case Type.RESULT:
+        if (resultPopupScript == null) {
+    			GameObject tempGameObject = NGUITools.AddChild(gameObject, resultPopupPrefab);
+    			tempGameObject.name = "ResultPopup";
+    			resultPopupScript = tempGameObject.GetComponent<ResultPopup>();
+    			resultPopupScript.Init(data);
+    			resultPopupScript.Open();
     		}
       break;
     }

@@ -31,6 +31,10 @@ public class GridManager : MonoBehaviour {
     cellTable.Reset();
   }
 
+  public void Restart() {
+    cells = new Grid[size, size];
+  }
+
   public Grid RandomAvailableCell() {
     List<Grid> availableCells = AvailableCells();
     return availableCells[(int)Random.Range(0, availableCells.Count - 1)];

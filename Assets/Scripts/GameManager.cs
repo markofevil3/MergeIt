@@ -7,11 +7,13 @@ public class GameManager : BaseScreen {
   
   public static bool started = false;
   public static bool paused = false;
+  public static bool stopped = false;
   
   private int gameSize = 4;
   private int startTiles = 2;
 	private int wonTileValue = 2048;
 	private int score;
+	private int highestTile = 2;
   
   // public GridManager gridManager;
   // public TileManager tileManager;
@@ -41,16 +43,47 @@ public class GameManager : BaseScreen {
 		
     AddStartTiles();
 		score = 0;
-		started = true;
+		Invoke("StartGame", 1.0f);
 	}
+  
+  public void Restart() {
+    started = false;
+    paused = false;
+    stopped = false;
+    score = 0;
+  	highestTile = 2;
+  	GridManager.Instance.Restart();
+  	TileManager.Instance.Restart();
+  	AddStartTiles();
+		Invoke("StartGame", 1.0f);
+  }
+  
+  void StartGame() {
+    started = true;
+  }
   
   private void OpenPausePopup() {
     PopupManager.Instance.OpenPopup(PopupManager.Type.PAUSE);
   }
   
+  private void OpenResultScreen() {
+    bool isHighScore = false;
+    if (PlayerPrefs.HasKey("highScore")) {
+      if (score > PlayerPrefs.GetInt("highScore")) {
+        isHighScore = true;
+        PlayerPrefs.SetInt("highScore", score);
+      }
+    } else {
+      isHighScore = true;
+      PlayerPrefs.SetInt("highScore", score);
+    }
+    PopupManager.Instance.OpenPopup(PopupManager.Type.RESULT, new object[]{score, highestTile, isHighScore});
+  }
+  
   public override void Close() {
     started = false;
     paused = false;
+    stopped = false;
     ScreenManager.Instance.gameManagerScript = null;
     base.Close();
   }
@@ -93,9 +126,12 @@ public class GameManager : BaseScreen {
             tile.GetMerge(new Position(nextTile.x, nextTile.y), nextTile.tileValue * 2, nextTile);
             TileManager.Instance.RemoveTile(nextTile);
 						score += tile.tileValue;
+						if (tile.tileValue > highestTile) {
+						  highestTile = tile.tileValue;
+						}
 						scoreLabel.text = score.ToString();
 						if (tile.tileValue == wonTileValue) {
-							Debug.Log("WON");
+							OpenResultScreen();
 						}
           } else {
             MoveTile(tile, positions[0]);
@@ -107,9 +143,39 @@ public class GameManager : BaseScreen {
       }
     }
     if (moved) {
-			Invoke("AddRandomTile", 0.1f);
-      // AddRandomTile();
+      Invoke("AddTileAfterMove", 0.1f);
     }
+  }
+  
+  private void AddTileAfterMove() {
+    AddRandomTile();
+    if (!MovesAvailable()) {
+      OpenResultScreen();
+    }
+  }
+  
+  private bool MovesAvailable() {
+    return GridManager.Instance.IsCellsAvailable() || TileMatchesAvailable();
+    
+  }
+  
+  private bool TileMatchesAvailable() {
+    Grid grid;
+    for (int x = 0; x < gameSize; x++) {
+      for (int y = 0; y < gameSize; y++) {
+        grid = GridManager.Instance.GetCell(new Position(x, y));
+        if (!grid.IsAvailable()) {
+          for (int direction = 0; direction < 4; direction++) {
+            DirectionVector vector = MapDirectionToVector((Direction)direction);
+            Tile otherTile = GridManager.Instance.GetCellContent(new Position(x + vector.x, y + vector.y));
+            if (otherTile != null && otherTile.tileValue == grid.gridValue) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
   }
   
   private void MoveTile(Tile tile, Position pos) {

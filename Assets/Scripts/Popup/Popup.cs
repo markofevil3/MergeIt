@@ -15,6 +15,11 @@ public class Popup : MonoBehaviour {
     thisPanel = gameObject.GetComponent<UIPanel>();
   }
   
+  public virtual void Init(object[] data) {
+    thisTransform = transform;
+    thisPanel = gameObject.GetComponent<UIPanel>();
+  }
+  
   public virtual void Open() {
     if (!isAnimating) {
       if (thisPanel.alpha > 0) {
@@ -22,11 +27,14 @@ public class Popup : MonoBehaviour {
   		}
   		thisTransform.localScale = minScale;
   		gameObject.SetActive(true);
+  		BeforeOpen();
   		BounceUpAnimation();
   		PopupManager.Instance.ShowDim();
   		isAnimating = true;
     }
   }
+  
+  public virtual void BeforeOpen() {}
   
   void BounceUpAnimation() {
 	  LeanTween.cancel(gameObject);

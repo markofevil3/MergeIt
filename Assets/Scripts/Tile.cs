@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour {
   
   public UILabel tileValueLabel;
   public UISprite tileBackground;
+  public UIPlayTween playTween;
 
   public void Init(Position pos, int value, Vector3 transPos) {
     this.x = pos.x;
@@ -33,19 +34,24 @@ public class Tile : MonoBehaviour {
     // transform.position = GameManager.Instance.gridManager.GetCell(pos).thisTransform.position;
   }
   
+  void FinishMovingMerge() {
+    tileBackground.spriteName = "tileTheme1_" + tileValue;
+    playTween.Play(true);
+  }
+  
   public void GetMerge(Position pos, int value, Tile fromTile) {
     mergeFromTile = fromTile;
     x = pos.x;
     y = pos.y;
-    tileValue = value;
-    tileBackground.spriteName = "tileTheme1_" + value;
-    // tileValueLabel.text = value.ToString();
-    LeanTween.move(gameObject, GridManager.Instance.GetCell(pos).thisTransform.position, 0.1f);
-    
-    // transform.position = GameManager.Instance.gridManager.GetCell(pos).thisTransform.position;
+    tileValue = mergeFromTile.tileValue * 2;
+    LeanTween.move(gameObject, GridManager.Instance.GetCell(pos).thisTransform.position, 0.1f).setOnComplete(FinishMovingMerge);
   }
   
   public void Remove() {
+    Invoke("DeleteTile", 0.1f);
+  }
+  
+  private void DeleteTile() {
     Destroy(gameObject);
   }
   
