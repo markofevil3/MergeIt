@@ -55,7 +55,7 @@ public class GameManager : BaseScreen {
   	GridManager.Instance.Restart();
   	TileManager.Instance.Restart();
   	AddStartTiles();
-		Invoke("StartGame", 1.0f);
+		Invoke("StartGame", 0.5f);
   }
   
   void StartGame() {

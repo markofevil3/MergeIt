@@ -9,7 +9,6 @@ public class Tile : MonoBehaviour {
   public Tile mergeFromTile;
   public Position previousPosition;
   
-  public UILabel tileValueLabel;
   public UISprite tileBackground;
   public UIPlayTween playTween;
 
