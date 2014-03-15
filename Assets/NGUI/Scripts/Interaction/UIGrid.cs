@@ -10,7 +10,7 @@ using System.Collections.Generic;
 /// All children added to the game object with this script will be repositioned to be on a grid of specified dimensions.
 /// If you want the cells to automatically set their scale based on the dimensions of their content, take a look at UITable.
 /// </summary>
-
+[ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/Grid")]
 public class UIGrid : UIWidgetContainer
 {
@@ -77,6 +77,7 @@ public class UIGrid : UIWidgetContainer
 	/// </summary>
 
 	public OnReposition onReposition;
+	public bool doRepositionNow = false;
 
 	/// <summary>
 	/// Reposition the children on the next Update().
@@ -106,8 +107,17 @@ public class UIGrid : UIWidgetContainer
 
 	protected virtual void Update ()
 	{
+	  if (doRepositionNow) {
+			Reset();
+			doRepositionNow = false;
+		}
 		if (mReposition) Reposition();
 		enabled = false;
+	}
+
+  public void Reset() {
+		enabled = true;
+		Start();
 	}
 
 	static protected int SortByName (Transform a, Transform b) { return string.Compare(a.name, b.name); }
