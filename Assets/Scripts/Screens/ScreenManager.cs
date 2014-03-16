@@ -11,11 +11,27 @@ public class ScreenManager : MonoBehaviour {
 	
 	public MainScreen mainScreenScript;
 	public GameManager gameManagerScript;
+	
+	public bool isFbInit = false;
 
 	// Use this for initialization
 	void Awake () {
 		Instance = this;
 		OpenMainScreen();
+		FacebookInit();
+	}
+	
+	void FacebookInit() {
+	  #if UNITY_IPHONE
+    FacebookBinding.init();
+    #endif
+		#if UNITY_ANDROID
+      // InAppBillingAndroid.Init();
+		#endif
+	}
+	
+	void FacebookInitCallback() {
+	  isFbInit = true;
 	}
 	
 	public void OpenMainScreen() {

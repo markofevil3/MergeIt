@@ -5,7 +5,8 @@ public class PopupManager : MonoBehaviour {
 
   public enum Type {
     PAUSE,
-    RESULT
+    RESULT,
+    SETTING
   }
   private float dimAnimateSpeed = 0.1f;
   public static PopupManager Instance { get; private set; }
@@ -14,9 +15,11 @@ public class PopupManager : MonoBehaviour {
   public UISprite dimBackgroundSprite;
   public GameObject pausePopupPrefab;
   public GameObject resultPopupPrefab;
+  public GameObject settingPopupPrefab;
 	
 	public PausePopup pausePopupScript;
 	public ResultPopup resultPopupScript;
+	public SettingPopup settingPopupScript;
 	
 	// Use this for initialization
 	void Awake () {
@@ -70,6 +73,15 @@ public class PopupManager : MonoBehaviour {
     			resultPopupScript = tempGameObject.GetComponent<ResultPopup>();
     			resultPopupScript.Init(data);
     			resultPopupScript.Open();
+    		}
+      break;
+      case Type.SETTING:
+        if (settingPopupScript == null) {
+    			GameObject tempGameObject = NGUITools.AddChild(gameObject, settingPopupPrefab);
+    			tempGameObject.name = "SettingPopup";
+    			settingPopupScript = tempGameObject.GetComponent<SettingPopup>();
+    			settingPopupScript.Init();
+    			settingPopupScript.Open();
     		}
       break;
     }
