@@ -68,7 +68,7 @@ public class ResultPopup : Popup {
   private void TryAgain() {
     GameManager.Instance.Close();
     Close();
-    ScreenManager.Instance.OpenGameScreen();
+    ScreenManager.Instance.OpenGameScreen(PlayerPrefs.GetInt("theme"));
   }
   
   private void Quit() {

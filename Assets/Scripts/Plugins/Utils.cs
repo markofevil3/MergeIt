@@ -21,4 +21,12 @@ public class Utils : MonoBehaviour {
 		return true;
 	}
   
+  public static bool IsUHD() {
+    if (Screen.width >= 2048) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
 }

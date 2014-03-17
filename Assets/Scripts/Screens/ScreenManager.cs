@@ -20,6 +20,9 @@ public class ScreenManager : MonoBehaviour {
 		Application.targetFrameRate = 60;
 		Application.runInBackground = false;
 		useGUILayout = false;
+		
+		AtlasManager.Instance.Init();
+		
 		OpenMainScreen();
 		FacebookInit();
 	}
@@ -47,8 +50,10 @@ public class ScreenManager : MonoBehaviour {
 		}
 	}
 	
-	public void OpenGameScreen() {
+	public void OpenGameScreen(int theme) {
 		if (gameManagerScript == null) {
+		  AtlasManager.Instance.SwitchTheme(theme);
+		  PlayerPrefs.SetInt("theme", theme);
 			GameObject tempGameObject = NGUITools.AddChild(parent, inGameSreenPrefab);
 			tempGameObject.name = "InGameSreen";
 			gameManagerScript = tempGameObject.GetComponent<GameManager>();

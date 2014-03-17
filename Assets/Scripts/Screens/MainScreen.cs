@@ -30,6 +30,24 @@ public class MainScreen : BaseScreen {
 		playText.SetActive(true);
     themeAchievement.SetActive(false);
     themePurchase.SetActive(false);
+    if (PlayerPrefs.HasKey("theme")) {
+      currentTheme = PlayerPrefs.GetInt("theme");
+    } else {
+      PlayerPrefs.SetInt("theme", 0);
+      currentTheme = 0;
+    }
+    SetCurrentTheme(currentTheme);
+	}
+	
+	private void SetCurrentTheme(int index) {
+	  Vector3 offset = -dragPanel.cachedTransform.InverseTransformPoint(themes[index].position);
+    Vector2 cr = dragPanel.clipOffset;
+    cr.x -= offset.x - dragPanel.cachedTransform.localPosition.x;
+    cr.y -= offset.y - - dragPanel.cachedTransform.localPosition.y;
+    dragPanel.clipOffset = cr;
+    dragPanel.cachedTransform.localPosition = offset;
+		currentTheme = index;
+		UpdateThemeButton(currentTheme);
 	}
 	
 	private void NextTheme() {
@@ -94,7 +112,7 @@ public class MainScreen : BaseScreen {
 	void OpenGameScreen() {
 		Close();
 		ScreenManager.Instance.mainScreenScript = null;
-		ScreenManager.Instance.OpenGameScreen();
+		ScreenManager.Instance.OpenGameScreen(currentTheme);
 	}
 	
 	void OpenSettingPopup() {
