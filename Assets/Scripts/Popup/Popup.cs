@@ -20,6 +20,12 @@ public class Popup : MonoBehaviour {
     thisPanel = gameObject.GetComponent<UIPanel>();
   }
   
+  public virtual void OpenPopupNoAnimation() {
+    gameObject.SetActive(true);
+    PopupManager.Instance.ShowDim();
+    HandleOpenPopupCallback();
+  }
+  
   public virtual void Open() {
     if (!isAnimating) {
       if (thisPanel.alpha > 0) {
@@ -88,8 +94,7 @@ public class Popup : MonoBehaviour {
   }
   
   public virtual void CloseNoAnimation() {
-    isAnimating = false;
-    Destroy(gameObject);
+    HandleClosePopupCallback();
     PopupManager.Instance.HideDimNoAnimation();
   }
 }

@@ -18,7 +18,6 @@ extern "C" {
 }
 #endif
 
-UIViewController *UnityGetGLViewController();
 void UnityPause( bool pause );
 
 

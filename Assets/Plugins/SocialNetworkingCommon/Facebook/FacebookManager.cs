@@ -37,12 +37,12 @@ public class FacebookManager : AbstractManager
 
 	// Fired when reauthorization fails
 	public static event Action<P31Error> reauthorizationFailedEvent;
-
+	
+	// Fired when the share dialog succeeds
+	public static event Action<Dictionary<string,object>> shareDialogSucceededEvent;
+	
 	// Fired when the share dialog fails
 	public static event Action<P31Error> shareDialogFailedEvent;
-
-	// iOS only. Fired when the share dialog succeeds
-	public static event Action<Dictionary<string,object>> shareDialogSucceededEvent;
 
 
 
@@ -115,14 +115,12 @@ public class FacebookManager : AbstractManager
 	}
 
 
-	// iOS only
 	public void shareDialogFailed( string json )
 	{
 		shareDialogFailedEvent.fire( P31Error.errorFromJson( json ) );
 	}
 
 
-	// iOS only
 	public void shareDialogSucceeded( string json )
 	{
 		shareDialogSucceededEvent.fire( json.dictionaryFromJson() );

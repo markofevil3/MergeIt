@@ -23,8 +23,8 @@ public class AdsManager : MonoBehaviour {
     }
   }
   
-  void HideAds() {
-    
+  public void HideAds() {
+    AdMobPlugin.HideBannerView();
   }
   
   void OnEnable(){

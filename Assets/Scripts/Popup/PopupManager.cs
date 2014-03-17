@@ -6,7 +6,8 @@ public class PopupManager : MonoBehaviour {
   public enum Type {
     PAUSE,
     RESULT,
-    SETTING
+    SETTING,
+    TUTORIAL
   }
   private float dimAnimateSpeed = 0.1f;
   public static PopupManager Instance { get; private set; }
@@ -16,10 +17,12 @@ public class PopupManager : MonoBehaviour {
   public GameObject pausePopupPrefab;
   public GameObject resultPopupPrefab;
   public GameObject settingPopupPrefab;
+  public GameObject tutorialPopupPrefab;
 	
 	public PausePopup pausePopupScript;
 	public ResultPopup resultPopupScript;
 	public SettingPopup settingPopupScript;
+	public TutorialPopup tutorialPopupScript;
 	
 	// Use this for initialization
 	void Awake () {
@@ -55,6 +58,20 @@ public class PopupManager : MonoBehaviour {
     dimBackground.SetActive(false);
   }
   
+  public void OpenPopupNoAnimation(Type type, object[] data = null) {
+    switch(type) {
+      case Type.TUTORIAL:
+        if (tutorialPopupScript == null) {
+    			GameObject tempGameObject = NGUITools.AddChild(gameObject, tutorialPopupPrefab);
+    			tempGameObject.name = "TutorialPopup";
+    			tutorialPopupScript = tempGameObject.GetComponent<TutorialPopup>();
+    			tutorialPopupScript.Init();
+    			tutorialPopupScript.OpenPopupNoAnimation();
+    		}
+      break;
+    }
+  }
+  
   public void OpenPopup(Type type, object[] data = null) {
     switch(type) {
       case Type.PAUSE:
@@ -82,6 +99,15 @@ public class PopupManager : MonoBehaviour {
     			settingPopupScript = tempGameObject.GetComponent<SettingPopup>();
     			settingPopupScript.Init();
     			settingPopupScript.Open();
+    		}
+      break;
+      case Type.TUTORIAL:
+        if (tutorialPopupScript == null) {
+    			GameObject tempGameObject = NGUITools.AddChild(gameObject, tutorialPopupPrefab);
+    			tempGameObject.name = "TutorialPopup";
+    			tutorialPopupScript = tempGameObject.GetComponent<TutorialPopup>();
+    			tutorialPopupScript.Init();
+    			tutorialPopupScript.Open();
     		}
       break;
     }

@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour {
 	Touch t;
 
   void Awake() {
-    Application.targetFrameRate = 60;
-		Application.runInBackground = false;
-		useGUILayout = false;
   }
 
   private float fingerStartTime;

@@ -17,6 +17,9 @@ public class ScreenManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		Instance = this;
+		Application.targetFrameRate = 60;
+		Application.runInBackground = false;
+		useGUILayout = false;
 		OpenMainScreen();
 		FacebookInit();
 	}

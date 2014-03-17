@@ -181,7 +181,7 @@ public class Facebook : P31RestKit
 
 		yield return www;
 
-		if( www.error != null )
+		if( !string.IsNullOrEmpty( www.error ) )
 		{
 			Debug.Log( "Error attempting to load profile image: " + www.error );
 			if( completionHandler != null )
@@ -277,10 +277,6 @@ public class Facebook : P31RestKit
 		});
     }
 	
-	// @EXTEND: Get List user info
-	public void getAppFriends(Action<string, object> completionHandler) {
-		graphRequest( "fql?q=SELECT+uid,+uid,+pic_square,+is_app_user+FROM+user+where+uid+IN+(SELECT+uid2+FROM+friend+WHERE+uid1+=+me())", completionHandler );
-	}
 
 	// Sends a request to fetch the currently logged in users friends
     public void getFriends( Action<string,FacebookFriendsResult> completionHandler )

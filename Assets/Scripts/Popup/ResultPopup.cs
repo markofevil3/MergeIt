@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ResultPopup : Popup {
   
@@ -9,7 +10,7 @@ public class ResultPopup : Popup {
   public UIEventTrigger btnTryAgain;
   public UIEventTrigger btnQuit;
   public UIEventTrigger btnShareFacebook;
-  public UIEventTrigger btnShareTwitter;
+  // public UIEventTrigger btnShareTwitter;
   public UISprite title;
   public UISprite crowSprite;
   
@@ -29,6 +30,12 @@ public class ResultPopup : Popup {
     if (isHighScore) {
       title.spriteName = "txt_newHighScore";
       highScoreStar.SetActive(true);
+      
+      Facebook.instance.postMessageWithLinkAndLinkToImage("You Got " + score + " points!",
+                                                          "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8",
+                                                          "Power of 2",
+                                                          "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
+      
     } else {
       title.spriteName = "txt_score";
       highScoreStar.SetActive(false);
@@ -40,10 +47,21 @@ public class ResultPopup : Popup {
   }
   
   private void ShareFacebook() {
-    #if UNITY_IPHONE
-      // FacebookBinding.showFacebookComposer("Get " + score + " score in Power Of 2", "/Atlas/AppIcon/appIcon_57.png", "www.google.com");
+	  #if UNITY_IPHONE
+	    var parameters = new Dictionary<string,string>
+			{
+				{ "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
+				{ "name", "Power of 2" },
+				{ "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
+				{ "caption", "You Got " + score + " points!" }
+			};
+			FacebookBinding.showDialog( "stream.publish", parameters );
+      // FacebookBinding.login();
+      // FacebookBinding.showFacebookComposer("Test");
+      // Facebook.instance.postMessageWithLinkAndLinkToImage("Get 5000 score in Power Of 2", "www.google.com", "Power of 2", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
 		#endif
 		#if UNITY_ANDROID
+		  
 		#endif
   }
   

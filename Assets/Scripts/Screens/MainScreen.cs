@@ -10,10 +10,13 @@ public class MainScreen : BaseScreen {
 	public UIEventTrigger btnSetting;
 	public UIEventTrigger btnLeaderboard;
 	public UIEventTrigger btnHelp;
-	public UIEventTrigger btnFacebook;
 	public Transform[] themes;
 	public UIPanel dragPanel;
 	public UIScrollView scrollView;
+	public GameObject playText;
+	public GameObject themeAchievement;
+	public GameObject themePurchase;
+	public UIProgressBar achievementProgress;
 	
 	private int currentTheme = 0;
 
@@ -24,18 +27,9 @@ public class MainScreen : BaseScreen {
 		EventDelegate.Set (btnSetting.onClick, OpenSettingPopup);
 		EventDelegate.Set (btnLeaderboard.onClick, OpenLeaderboard);
 		EventDelegate.Set (btnHelp.onClick, OpenHelp);
-		EventDelegate.Set (btnFacebook.onClick, ShareFacebook);
-	}
-	
-	private void ShareFacebook() {
-	  #if UNITY_IPHONE
-	    FacebookBinding.login();
-	    FacebookBinding.showFacebookComposer("Test");
-      // Facebook.instance.postMessageWithLinkAndLinkToImage("Get 5000 score in Power Of 2", "www.google.com", "Power of 2", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
-		#endif
-		#if UNITY_ANDROID
-		  
-		#endif
+		playText.SetActive(true);
+    themeAchievement.SetActive(false);
+    themePurchase.SetActive(false);
 	}
 	
 	private void NextTheme() {
@@ -45,7 +39,45 @@ public class MainScreen : BaseScreen {
   		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
   		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
   		currentTheme += 1;
+  		UpdateThemeButton(currentTheme);
 	  }
+	}
+	
+	private void UpdateThemeButton(int index) {
+	  switch(index) {
+	    case 0:
+	      playText.SetActive(true);
+        themeAchievement.SetActive(false);
+        themePurchase.SetActive(false);
+	      EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
+	    break;
+	    case 1:
+	      if (PlayerPrefs.HasKey("totalScore") && PlayerPrefs.GetInt("totalScore") >= 10000) {
+	        playText.SetActive(true);
+	        EventDelegate.Set (btnPlay.onClick, OpenGameScreen);
+	      } else {
+	        playText.SetActive(false);
+	        themeAchievement.SetActive(true);
+	        themePurchase.SetActive(false);
+	        EventDelegate.Remove(btnPlay.onClick, OpenGameScreen);
+	        EventDelegate.Remove(btnPlay.onClick, PurchaseTheme);
+	        int score = PlayerPrefs.GetInt("totalScore");
+	        achievementProgress.value = score / 10000.0f;
+	      }
+	    break;
+	    case 2:
+	      playText.SetActive(false);
+        themeAchievement.SetActive(false);
+        themePurchase.SetActive(true);
+        EventDelegate.Set(btnPlay.onClick, PurchaseTheme);
+	    break;
+	    case 3:
+	    break;
+	  }
+	}
+	
+	private void PurchaseTheme() {
+	  Debug.Log("PurchaseTheme-" + currentTheme);
 	}
 	
 	private void PrevTheme() {
@@ -55,6 +87,7 @@ public class MainScreen : BaseScreen {
   		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
   		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
   		currentTheme -= 1;
+  		UpdateThemeButton(currentTheme);
 	  }
 	}
 	
@@ -73,6 +106,6 @@ public class MainScreen : BaseScreen {
 	}
 	
 	void OpenHelp() {
-	  
+	  PopupManager.Instance.OpenPopupNoAnimation(PopupManager.Type.TUTORIAL);
 	}
 }

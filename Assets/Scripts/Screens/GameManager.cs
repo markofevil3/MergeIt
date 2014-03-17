@@ -43,9 +43,17 @@ public class GameManager : BaseScreen {
 		
     AddStartTiles();
 		score = 0;
-		Invoke("StartGame", 1.0f);
+    // Invoke("StartGame", 0.2f);
+    StartGame();
 		AdsManager.Instance.ShowAds();
+		if (IsFirstPlay()) {
+		  PopupManager.Instance.OpenPopupNoAnimation(PopupManager.Type.TUTORIAL);
+		}
 	}
+  
+  private bool IsFirstPlay() {
+    return PlayerPrefs.HasKey("highScore");
+  }
   
   public void Restart() {
     started = false;
@@ -56,7 +64,8 @@ public class GameManager : BaseScreen {
   	GridManager.Instance.Restart();
   	TileManager.Instance.Restart();
   	AddStartTiles();
-		Invoke("StartGame", 0.5f);
+    // Invoke("StartGame", 0.2f);
+    StartGame();
   }
   
   void StartGame() {
@@ -78,6 +87,11 @@ public class GameManager : BaseScreen {
       isHighScore = true;
       PlayerPrefs.SetInt("highScore", score);
     }
+    if (PlayerPrefs.HasKey("totalScore")) {
+      PlayerPrefs.SetInt("totalScore", PlayerPrefs.GetInt("totalScore") + score);
+    } else {
+      PlayerPrefs.SetInt("totalScore", score);
+    }
     GameCenterManager.Instance.RegisterScore(score);
     PopupManager.Instance.OpenPopup(PopupManager.Type.RESULT, new object[]{score, highestTile, isHighScore});
   }
@@ -87,6 +101,7 @@ public class GameManager : BaseScreen {
     paused = false;
     stopped = false;
     ScreenManager.Instance.gameManagerScript = null;
+    AdsManager.Instance.HideAds();
     base.Close();
   }
   

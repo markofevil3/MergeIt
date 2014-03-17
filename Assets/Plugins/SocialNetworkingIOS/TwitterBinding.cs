@@ -13,8 +13,8 @@ public class TwitterBinding
 	{
 		TwitterManager.noop();
 	}
-	
-	
+
+
     [DllImport("__Internal")]
     private static extern void _twitterInit( string consumerKey, string consumerSecret );
 
@@ -133,7 +133,7 @@ public class TwitterBinding
     [DllImport("__Internal")]
     private static extern bool _twitterCanUserTweet();
 
-	// Checks to see if a user can tweet (are they logged in with a Twitter account)?
+	// Checks to see if a user can tweet (are they logged in with a Twitter account) using the native UI via the showTweetComposer method
     public static bool canUserTweet()
     {
         if( Application.platform == RuntimePlatform.IPhonePlayer )
