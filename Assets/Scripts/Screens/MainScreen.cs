@@ -29,7 +29,9 @@ public class MainScreen : BaseScreen {
 	
 	private void ShareFacebook() {
 	  #if UNITY_IPHONE
-      Facebook.instance.postMessageWithLinkAndLinkToImage("Get 5000 score in Power Of 2", "www.google.com", "Power of 2", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
+	    FacebookBinding.login();
+	    FacebookBinding.showFacebookComposer("Test");
+      // Facebook.instance.postMessageWithLinkAndLinkToImage("Get 5000 score in Power Of 2", "www.google.com", "Power of 2", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
 		#endif
 		#if UNITY_ANDROID
 		  
