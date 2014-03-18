@@ -6,18 +6,18 @@ public class MainScreen : BaseScreen {
 
   public static MainScreen Instance { get; private set; }
 
-	public UIEventTrigger btnPlay;
+  public UIEventTrigger btnPlay;
 	public UIEventTrigger btnNext;
 	public UIEventTrigger btnPrev;
+	public UIButton btnNextButton;
+	public UIButton btnPrevButton;
 	public UIEventTrigger btnSetting;
 	public UIEventTrigger btnLeaderboard;
 	public UIEventTrigger btnHelp;
 	public Transform[] themes;
+	public MainScreenThemeScript[] themeScripts;
 	public UIPanel dragPanel;
 	public UIScrollView scrollView;
-	public GameObject playText;
-	public GameObject themeAchievement;
-	public GameObject themePurchase;
 	public UIProgressBar achievementProgress;
 	
 	private int achievementScore = 0;
@@ -25,15 +25,12 @@ public class MainScreen : BaseScreen {
 
 	public override void Init() {
 	  Instance = this;
-		EventDelegate.Set (btnPlay.onClick, OpenGameScreen);
+    // EventDelegate.Set (btnPlay.onClick, OpenGameScreen);
 		EventDelegate.Set (btnNext.onClick, NextTheme);
 		EventDelegate.Set (btnPrev.onClick, PrevTheme);
 		EventDelegate.Set (btnSetting.onClick, OpenSettingPopup);
 		EventDelegate.Set (btnLeaderboard.onClick, OpenLeaderboard);
 		EventDelegate.Set (btnHelp.onClick, OpenHelp);
-		playText.SetActive(true);
-    themeAchievement.SetActive(false);
-    themePurchase.SetActive(false);
     if (PlayerPrefs.HasKey("theme")) {
       currentTheme = PlayerPrefs.GetInt("theme");
     } else {
@@ -70,52 +67,60 @@ public class MainScreen : BaseScreen {
 	private void UpdateThemeButton(int index) {
 	  switch(index) {
 	    case 0:
-	      playText.SetActive(true);
-        themeAchievement.SetActive(false);
-        themePurchase.SetActive(false);
-	      EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
+	      themeScripts[index].playText.SetActive(true);
+        themeScripts[index].themeAchievement.SetActive(false);
+        themeScripts[index].themePurchase.SetActive(false);
+	      EventDelegate.Set(themeScripts[index].btnPlay.onClick, OpenGameScreen);
+	      btnPrevButton.isEnabled = false;
+	      btnNextButton.isEnabled = true;
 	    break;
 	    case 1:
 	      if (PlayerPrefs.HasKey("totalScore") && PlayerPrefs.GetInt("totalScore") >= achievementScore) {
-	        playText.SetActive(true);
-	        themeAchievement.SetActive(false);
-	        themePurchase.SetActive(false);
-	        EventDelegate.Set (btnPlay.onClick, OpenGameScreen);
+	        themeScripts[index].playText.SetActive(true);
+	        themeScripts[index].themeAchievement.SetActive(false);
+	        themeScripts[index].themePurchase.SetActive(false);
+	        EventDelegate.Set (themeScripts[index].btnPlay.onClick, OpenGameScreen);
 	      } else {
-	        playText.SetActive(false);
-	        themeAchievement.SetActive(true);
-	        themePurchase.SetActive(false);
-	        EventDelegate.Remove(btnPlay.onClick, OpenGameScreen);
-	        EventDelegate.Remove(btnPlay.onClick, PurchaseTheme);
+	        themeScripts[index].playText.SetActive(false);
+	        themeScripts[index].themeAchievement.SetActive(true);
+	        themeScripts[index].themePurchase.SetActive(false);
+	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, OpenGameScreen);
+	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, PurchaseTheme);
 	        int score = PlayerPrefs.GetInt("totalScore");
 	        achievementProgress.value = (float)score / achievementScore;
 	      }
+	      btnPrevButton.isEnabled = true;
+	      btnNextButton.isEnabled = true;
 	    break;
 	    case 2:
     		if (PlayerPrefs.HasKey("candytheme")) {
-    		  playText.SetActive(true);
-          themeAchievement.SetActive(false);
-          themePurchase.SetActive(false);
-          EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
+    		  themeScripts[index].playText.SetActive(true);
+          themeScripts[index].themeAchievement.SetActive(false);
+          themeScripts[index].themePurchase.SetActive(false);
+          EventDelegate.Set(themeScripts[index].btnPlay.onClick, OpenGameScreen);
     		} else {
-    		  playText.SetActive(false);
-          themeAchievement.SetActive(false);
-          themePurchase.SetActive(true);
-          EventDelegate.Set(btnPlay.onClick, PurchaseTheme);
+    		  themeScripts[index].playText.SetActive(false);
+          themeScripts[index].themeAchievement.SetActive(false);
+          themeScripts[index].themePurchase.SetActive(true);
+          EventDelegate.Set(themeScripts[index].btnPlay.onClick, PurchaseTheme);
     		}
+    		btnPrevButton.isEnabled = true;
+	      btnNextButton.isEnabled = true;
 	    break;
 	    case 3:
 	      if (PlayerPrefs.HasKey("jeweltheme")) {
-    		  playText.SetActive(true);
-          themeAchievement.SetActive(false);
-          themePurchase.SetActive(false);
-          EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
+    		  themeScripts[index].playText.SetActive(true);
+          themeScripts[index].themeAchievement.SetActive(false);
+          themeScripts[index].themePurchase.SetActive(false);
+          EventDelegate.Set(themeScripts[index].btnPlay.onClick, OpenGameScreen);
     		} else {
-    		  playText.SetActive(false);
-          themeAchievement.SetActive(false);
-          themePurchase.SetActive(true);
-          EventDelegate.Set(btnPlay.onClick, PurchaseTheme);
+    		  themeScripts[index].playText.SetActive(false);
+          themeScripts[index].themeAchievement.SetActive(false);
+          themeScripts[index].themePurchase.SetActive(true);
+          EventDelegate.Set(themeScripts[index].btnPlay.onClick, PurchaseTheme);
     		}
+    		btnPrevButton.isEnabled = true;
+	      btnNextButton.isEnabled = false;
 	    break;
 	  }
 	}

@@ -16,10 +16,10 @@ public class AdsManager : MonoBehaviour {
     string extras = "{\"color_bg\":\"AAAAFF\", \"color_bg_top\":\"FFFFFF\"}";
     if (Utils.IsTablet()) {
       AdMobPlugin.CreateBannerView(IOS_IPAD_KEY, AdMobPlugin.AdSize.Leaderboard, true);
-      AdMobPlugin.RequestBannerAd(true, extras);
+      AdMobPlugin.RequestBannerAd(false, extras);
     } else {
       AdMobPlugin.CreateBannerView(IOS_IPHONE_KEY, AdMobPlugin.AdSize.SmartBanner, true);
-      AdMobPlugin.RequestBannerAd(true, extras);
+      AdMobPlugin.RequestBannerAd(false, extras);
     }
   }
   
