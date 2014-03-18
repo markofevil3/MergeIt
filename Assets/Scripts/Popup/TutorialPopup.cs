@@ -5,14 +5,13 @@ public class TutorialPopup : Popup {
 
   public UIEventTrigger btnClose;
   public UIEventTrigger tapToContinueEvent;
-  public UITable table;
+  public UIGrid table;
 	public Transform[] tutorials;
 	public UIEventTrigger[] tutorialEvents;
 	public UIPanel dragPanel;
 	public UIScrollView scrollView;
 	
-	public UIAnchor tableAnchor;
-	public UIStretch[] tutorialStretch;
+  // public UIStretch[] tutorialStretch;
 	public UIStretch panelStretch;
 	public UIStretch titleBgStretch;
 	
@@ -31,11 +30,18 @@ public class TutorialPopup : Popup {
 		EventDelegate.Set (tapToContinueEvent.onClick, ChangeTutorial);
  		panelStretch.Reset();
  		titleBgStretch.Reset();
- 		for (int i = 0; i < tutorialStretch.Length; i++) {
- 		  tutorialStretch[i].Reset();
- 		}
- 		tableAnchor.Init();
+    // for (int i = 0; i < tutorialStretch.Length; i++) {
+    //   tutorialStretch[i].Reset();
+    // }
  		table.Reset();
+ 		
+ 		Vector3 offset = -dragPanel.cachedTransform.InverseTransformPoint(tutorials[0].position);
+    Vector2 cr = dragPanel.clipOffset;
+    cr.x -= offset.x - dragPanel.cachedTransform.localPosition.x;
+    cr.y -= offset.y - - dragPanel.cachedTransform.localPosition.y;
+    dragPanel.clipOffset = cr;
+    dragPanel.cachedTransform.localPosition = offset;
+    
     GameManager.paused = true;
   }
 

@@ -51,7 +51,9 @@ public class GameManager : BaseScreen {
 		if (IsFirstPlay()) {
 		  PopupManager.Instance.OpenPopupNoAnimation(PopupManager.Type.TUTORIAL);
 		} else {
-			AdsManager.Instance.ShowAds();
+		  if (!PlayerPrefs.HasKey("jeweltheme") && !PlayerPrefs.HasKey("candytheme")) {
+			  AdsManager.Instance.ShowAds();
+		  }
 		}
 	}
   
