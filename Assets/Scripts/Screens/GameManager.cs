@@ -45,14 +45,15 @@ public class GameManager : BaseScreen {
 		score = 0;
     // Invoke("StartGame", 0.2f);
     StartGame();
-		AdsManager.Instance.ShowAds();
 		if (IsFirstPlay()) {
 		  PopupManager.Instance.OpenPopupNoAnimation(PopupManager.Type.TUTORIAL);
+		} else {
+			AdsManager.Instance.ShowAds();
 		}
 	}
   
-  private bool IsFirstPlay() {
-    return PlayerPrefs.HasKey("highScore");
+  public bool IsFirstPlay() {
+    return !PlayerPrefs.HasKey("highScore");
   }
   
   public void Restart() {

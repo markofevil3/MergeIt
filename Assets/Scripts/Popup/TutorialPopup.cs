@@ -4,6 +4,7 @@ using System.Collections;
 public class TutorialPopup : Popup {
 
   public UIEventTrigger btnClose;
+  public UIEventTrigger tapToContinueEvent;
   public UITable table;
 	public Transform[] tutorials;
 	public UIEventTrigger[] tutorialEvents;
@@ -21,7 +22,13 @@ public class TutorialPopup : Popup {
     base.Init();
  		EventDelegate.Set (btnClose.onClick, CloseNoAnimation);
  		EventDelegate.Set (tutorialEvents[0].onClick, ChangeTutorial);
- 		EventDelegate.Set (tutorialEvents[1].onClick, ChangeTutorial);
+		if (GameManager.Instance != null && GameManager.Instance.IsFirstPlay()) {
+			btnClose.gameObject.SetActive(false);
+			EventDelegate.Set (tutorialEvents[1].onClick, CloseNoAnimation);
+		} else {
+			EventDelegate.Set (tutorialEvents[1].onClick, ChangeTutorial);
+		}
+		EventDelegate.Set (tapToContinueEvent.onClick, ChangeTutorial);
  		panelStretch.Reset();
  		titleBgStretch.Reset();
  		for (int i = 0; i < tutorialStretch.Length; i++) {
@@ -39,9 +46,15 @@ public class TutorialPopup : Popup {
 		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
 		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
 		currentTut = nextTut;
+		if (GameManager.Instance != null && GameManager.Instance.IsFirstPlay() && nextTut == 0) {
+			EventDelegate.Set (tapToContinueEvent.onClick, CloseNoAnimation);
+		}
   }
   
   public override void HandleClosePopupCallback() {
+		if (GameManager.Instance != null && GameManager.Instance.IsFirstPlay()) {
+			AdsManager.Instance.ShowAds();
+		}
     GameManager.paused = false;
     PopupManager.Instance.tutorialPopupScript = null;
     base.HandleClosePopupCallback();
