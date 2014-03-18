@@ -72,6 +72,8 @@ public class MainScreen : BaseScreen {
 	    case 1:
 	      if (PlayerPrefs.HasKey("totalScore") && PlayerPrefs.GetInt("totalScore") >= 10000) {
 	        playText.SetActive(true);
+	        themeAchievement.SetActive(false);
+	        themePurchase.SetActive(false);
 	        EventDelegate.Set (btnPlay.onClick, OpenGameScreen);
 	      } else {
 	        playText.SetActive(false);
