@@ -7,7 +7,8 @@ public class ScreenManager : MonoBehaviour {
 	
 	public GameObject parent;
 	public GameObject mainScreenPrefab;
-	public GameObject inGameSreenPrefab;
+	public GameObject theme1Prefab;
+	public GameObject theme2Prefab;
 	
 	public MainScreen mainScreenScript;
 	public GameManager gameManagerScript;
@@ -53,12 +54,23 @@ public class ScreenManager : MonoBehaviour {
 	
 	public void OpenGameScreen(int theme) {
 		if (gameManagerScript == null) {
-		  AtlasManager.Instance.SwitchTheme(theme);
 		  PlayerPrefs.SetInt("theme", theme);
-			GameObject tempGameObject = NGUITools.AddChild(parent, inGameSreenPrefab);
+		  GameObject tempGameObject;
+		  switch(theme) {
+		    case 0:
+		      tempGameObject = NGUITools.AddChild(parent, theme1Prefab);
+		    break;
+		    case 1:
+		      tempGameObject = NGUITools.AddChild(parent, theme2Prefab);
+		    break;
+		    default:
+		      tempGameObject = NGUITools.AddChild(parent, theme1Prefab);
+		    break;
+		  }
+      // AtlasManager.Instance.SwitchTheme(theme);
 			tempGameObject.name = "InGameSreen";
 			gameManagerScript = tempGameObject.GetComponent<GameManager>();
-			gameManagerScript.Init();
+			gameManagerScript.Init(theme);
 		}
 	}
 }

@@ -18,6 +18,7 @@ public class MainScreen : BaseScreen {
 	public GameObject themePurchase;
 	public UIProgressBar achievementProgress;
 	
+	private int achievementScore = 0;
 	private int currentTheme = 0;
 
 	public override void Init() {
@@ -70,7 +71,7 @@ public class MainScreen : BaseScreen {
 	      EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
 	    break;
 	    case 1:
-	      if (PlayerPrefs.HasKey("totalScore") && PlayerPrefs.GetInt("totalScore") >= 10000) {
+	      if (PlayerPrefs.HasKey("totalScore") && PlayerPrefs.GetInt("totalScore") >= achievementScore) {
 	        playText.SetActive(true);
 	        themeAchievement.SetActive(false);
 	        themePurchase.SetActive(false);
@@ -82,7 +83,7 @@ public class MainScreen : BaseScreen {
 	        EventDelegate.Remove(btnPlay.onClick, OpenGameScreen);
 	        EventDelegate.Remove(btnPlay.onClick, PurchaseTheme);
 	        int score = PlayerPrefs.GetInt("totalScore");
-	        achievementProgress.value = score / 10000.0f;
+	        achievementProgress.value = (float)score / achievementScore;
 	      }
 	    break;
 	    case 2:

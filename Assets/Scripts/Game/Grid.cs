@@ -14,6 +14,7 @@ public class Grid : MonoBehaviour {
     this.x = pos.x;
     this.y = pos.y;
     this.gridValue = gridValue;
+    background.atlas = GameManager.Instance.currentAtlas;
     background.width = background.height = GameManager.Instance.cellSize;
   }
   

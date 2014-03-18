@@ -23,6 +23,8 @@ public class GameManager : BaseScreen {
 	public int cellSize;
 	public UILabel scoreLabel;
 	public UIEventTrigger btnPause;
+	public UIAtlas currentAtlas;
+	public int currentTheme;
   public static GameManager Instance { get; private set; }
   
 	public enum Direction {
@@ -32,8 +34,9 @@ public class GameManager : BaseScreen {
     RIGHT
   }
   
-	public override void Init() {
+	public override void Init(int theme) {
 		Instance = this;
+		currentTheme = theme;
     cellBackgroundStretch.Reset();
     cellTableAnchor.Init();
 		cellSize = cellBackground.width * 100 / 486;

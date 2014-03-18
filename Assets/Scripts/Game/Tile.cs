@@ -19,12 +19,13 @@ public class Tile : MonoBehaviour {
     this.x = pos.x;
     this.y = pos.y;
     this.tileValue = value;
+    tileBackground.atlas = GameManager.Instance.currentAtlas;
     tileBackground.spriteName = "tileTheme1_" + value;
     tileBackground.width = tileBackground.height = GameManager.Instance.cellSize;
     glowingBackground.width = glowingBackground.height = (int)(GameManager.Instance.cellSize * 1.15f);
     // tileValueLabel.text = value.ToString();
     transform.position = transPos;
-		if (tileValue >= glowingValue) {
+		if (GameManager.Instance.currentTheme == 0 && tileValue >= glowingValue) {
 			glowingBackground.gameObject.SetActive(true);
 		} else {
 			glowingBackground.gameObject.SetActive(false);
@@ -59,7 +60,7 @@ public class Tile : MonoBehaviour {
     y = pos.y;
     tileValue = mergeFromTile.tileValue * 2;
     tileBackground.depth = 5;
-		if (tileValue >= glowingValue) {
+		if (GameManager.Instance.currentTheme == 0 && tileValue >= glowingValue) {
 			glowingBackground.gameObject.SetActive(true);
 		} else {
 			glowingBackground.gameObject.SetActive(false);
