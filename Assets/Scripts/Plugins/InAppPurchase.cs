@@ -4,34 +4,32 @@ using System.Collections.Generic;
 using Prime31;
 
 public class InAppPurchase : MonoBehaviour {
-  
-	public static InAppPurchase Instance { get; private set; }
+  public static bool isPurchasing = false;
+  public static InAppPurchase Instance { get; private set; }
 	
-	public static bool isPurchasing = false;
-  
+	void Awake() {
+    Instance = this;
+  }
+	
+  #if UNITY_IPHONE
+	  
   string[] productIdentifiers = new string[] { "candytheme", "jeweltheme" };
   private List<StoreKitProduct> products;
   
-  void Awake() {
-    Instance = this;
-  }
-  
 	void Start()
 	{
-	  #if UNITY_IPHONE
-  		StoreKitBinding.requestProductData(productIdentifiers);
+		StoreKitBinding.requestProductData(productIdentifiers);
 
-  		StoreKitManager.transactionUpdatedEvent += transactionUpdatedEvent;
-  		StoreKitManager.productPurchaseAwaitingConfirmationEvent += productPurchaseAwaitingConfirmationEvent;
-  		StoreKitManager.purchaseSuccessfulEvent += purchaseSuccessfulEvent;
-  		StoreKitManager.purchaseCancelledEvent += purchaseCancelledEvent;
-  		StoreKitManager.purchaseFailedEvent += purchaseFailedEvent;
-  		StoreKitManager.productListReceivedEvent += productListReceivedEvent;
-  		StoreKitManager.productListRequestFailedEvent += productListRequestFailedEvent;
-  		StoreKitManager.restoreTransactionsFailedEvent += restoreTransactionsFailedEvent;
-  		StoreKitManager.restoreTransactionsFinishedEvent += restoreTransactionsFinishedEvent;
-  		StoreKitManager.paymentQueueUpdatedDownloadsEvent += paymentQueueUpdatedDownloadsEvent;
-		#endif
+		StoreKitManager.transactionUpdatedEvent += transactionUpdatedEvent;
+		StoreKitManager.productPurchaseAwaitingConfirmationEvent += productPurchaseAwaitingConfirmationEvent;
+		StoreKitManager.purchaseSuccessfulEvent += purchaseSuccessfulEvent;
+		StoreKitManager.purchaseCancelledEvent += purchaseCancelledEvent;
+		StoreKitManager.purchaseFailedEvent += purchaseFailedEvent;
+		StoreKitManager.productListReceivedEvent += productListReceivedEvent;
+		StoreKitManager.productListRequestFailedEvent += productListRequestFailedEvent;
+		StoreKitManager.restoreTransactionsFailedEvent += restoreTransactionsFailedEvent;
+		StoreKitManager.restoreTransactionsFinishedEvent += restoreTransactionsFinishedEvent;
+		StoreKitManager.paymentQueueUpdatedDownloadsEvent += paymentQueueUpdatedDownloadsEvent;
 	}
   
   public void PurchaseProduct(int index) {
@@ -127,4 +125,6 @@ public class InAppPurchase : MonoBehaviour {
 		foreach( var dl in downloads )
 			Debug.Log( dl );
 	}
+	#endif
+  
 }

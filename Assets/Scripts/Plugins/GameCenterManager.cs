@@ -32,13 +32,6 @@ public class GameCenterManager : MonoBehaviour {
   public void ShowLeaderboard() {
     if (isLoggedIn) {
       Social.ShowLeaderboardUI();
-    // ILeaderboard leaderboard = Social.CreateLeaderboard();
-    //  leaderboard.id = leaderboardID;
-    //  leaderboard.LoadScores (result => {       
-    //    Debug.Log("Received " + leaderboard.scores.Length + " scores");
-    //    foreach (IScore score in leaderboard.scores)
-    //      Debug.Log(score);
-    //  });
     }
   }
   

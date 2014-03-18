@@ -133,7 +133,9 @@ public class MainScreen : BaseScreen {
 	private void PurchaseTheme() {
 	  Debug.Log("PurchaseTheme-" + currentTheme);
 	  if (InAppPurchase.Instance != null) {
-	    InAppPurchase.Instance.PurchaseProduct(currentTheme);
+      #if UNITY_IPHONE
+	      InAppPurchase.Instance.PurchaseProduct(currentTheme);
+	    #endif
 	  }
 	}
 	
