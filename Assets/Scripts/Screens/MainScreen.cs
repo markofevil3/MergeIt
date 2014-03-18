@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class MainScreen : BaseScreen {
 
+  public static MainScreen Instance { get; private set; }
+
 	public UIEventTrigger btnPlay;
 	public UIEventTrigger btnNext;
 	public UIEventTrigger btnPrev;
@@ -22,6 +24,7 @@ public class MainScreen : BaseScreen {
 	private int currentTheme = 0;
 
 	public override void Init() {
+	  Instance = this;
 		EventDelegate.Set (btnPlay.onClick, OpenGameScreen);
 		EventDelegate.Set (btnNext.onClick, NextTheme);
 		EventDelegate.Set (btnPrev.onClick, PrevTheme);
@@ -52,13 +55,15 @@ public class MainScreen : BaseScreen {
 	}
 	
 	private void NextTheme() {
-	  if (currentTheme < themes.Length - 1) {
-	    Vector3 offset = -dragPanel.cachedTransform.InverseTransformPoint(themes[currentTheme + 1].position);
-  		if (!scrollView.canMoveHorizontally) offset.x = dragPanel.cachedTransform.localPosition.x;
-  		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
-  		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
-  		currentTheme += 1;
-  		UpdateThemeButton(currentTheme);
+	  if (!InAppPurchase.isPurchasing) {
+	    if (currentTheme < themes.Length - 1) {
+  	    Vector3 offset = -dragPanel.cachedTransform.InverseTransformPoint(themes[currentTheme + 1].position);
+    		if (!scrollView.canMoveHorizontally) offset.x = dragPanel.cachedTransform.localPosition.x;
+    		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
+    		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
+    		currentTheme += 1;
+    		UpdateThemeButton(currentTheme);
+  	  }
 	  }
 	}
 	
@@ -87,46 +92,82 @@ public class MainScreen : BaseScreen {
 	      }
 	    break;
 	    case 2:
-	      playText.SetActive(false);
-        themeAchievement.SetActive(false);
-        themePurchase.SetActive(true);
-        EventDelegate.Set(btnPlay.onClick, PurchaseTheme);
+    		if (PlayerPrefs.HasKey("candytheme")) {
+    		  playText.SetActive(true);
+          themeAchievement.SetActive(false);
+          themePurchase.SetActive(false);
+          EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
+    		} else {
+    		  playText.SetActive(false);
+          themeAchievement.SetActive(false);
+          themePurchase.SetActive(true);
+          EventDelegate.Set(btnPlay.onClick, PurchaseTheme);
+    		}
 	    break;
 	    case 3:
+	      if (PlayerPrefs.HasKey("jeweltheme")) {
+    		  playText.SetActive(true);
+          themeAchievement.SetActive(false);
+          themePurchase.SetActive(false);
+          EventDelegate.Set(btnPlay.onClick, OpenGameScreen);
+    		} else {
+    		  playText.SetActive(false);
+          themeAchievement.SetActive(false);
+          themePurchase.SetActive(true);
+          EventDelegate.Set(btnPlay.onClick, PurchaseTheme);
+    		}
 	    break;
 	  }
 	}
+	
+	public void UpdatePurchasedTheme(int themeIndex) {
+	  UpdateThemeButton(themeIndex);
+	}
+  
 	
 	private void PurchaseTheme() {
 	  Debug.Log("PurchaseTheme-" + currentTheme);
-	}
-	
-	private void PrevTheme() {
-	  if (currentTheme > 0) {
-	    Vector3 offset = -dragPanel.cachedTransform.InverseTransformPoint(themes[currentTheme - 1].transform.position);
-  		if (!scrollView.canMoveHorizontally) offset.x = dragPanel.cachedTransform.localPosition.x;
-  		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
-  		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
-  		currentTheme -= 1;
-  		UpdateThemeButton(currentTheme);
+	  if (InAppPurchase.Instance != null) {
+	    InAppPurchase.Instance.PurchaseProduct(currentTheme);
 	  }
 	}
 	
+	private void PrevTheme() {
+	  if (!InAppPurchase.isPurchasing) {
+	    if (currentTheme > 0) {
+  	    Vector3 offset = -dragPanel.cachedTransform.InverseTransformPoint(themes[currentTheme - 1].transform.position);
+    		if (!scrollView.canMoveHorizontally) offset.x = dragPanel.cachedTransform.localPosition.x;
+    		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
+    		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
+    		currentTheme -= 1;
+    		UpdateThemeButton(currentTheme);
+  	  }
+  	}
+	}
+	
 	void OpenGameScreen() {
-		Close();
-		ScreenManager.Instance.mainScreenScript = null;
-		ScreenManager.Instance.OpenGameScreen(currentTheme);
+	  if (!InAppPurchase.isPurchasing) {
+	    Close();
+  		ScreenManager.Instance.mainScreenScript = null;
+  		ScreenManager.Instance.OpenGameScreen(currentTheme);
+	  }
 	}
 	
 	void OpenSettingPopup() {
-	  PopupManager.Instance.OpenPopup(PopupManager.Type.SETTING);
+	  if (!InAppPurchase.isPurchasing) {
+	    PopupManager.Instance.OpenPopup(PopupManager.Type.SETTING);
+	  }
 	}
 	
 	void OpenLeaderboard() {
-	  GameCenterManager.Instance.ShowLeaderboard();
+	  if (!InAppPurchase.isPurchasing) {
+	    GameCenterManager.Instance.ShowLeaderboard();
+	  }
 	}
 	
 	void OpenHelp() {
-	  PopupManager.Instance.OpenPopupNoAnimation(PopupManager.Type.TUTORIAL);
+	  if (!InAppPurchase.isPurchasing) {
+	    PopupManager.Instance.OpenPopupNoAnimation(PopupManager.Type.TUTORIAL);
+	  }
 	}
 }
