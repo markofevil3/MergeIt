@@ -11,6 +11,7 @@ public class ScreenManager : MonoBehaviour {
 	
 	public MainScreen mainScreenScript;
 	public GameManager gameManagerScript;
+	public AtlasManager atlasManager;
 	
 	public bool isFbInit = false;
 
@@ -21,7 +22,7 @@ public class ScreenManager : MonoBehaviour {
 		Application.runInBackground = false;
 		useGUILayout = false;
 		
-		AtlasManager.Instance.Init();
+		atlasManager.Init();
 		
 		OpenMainScreen();
 		FacebookInit();

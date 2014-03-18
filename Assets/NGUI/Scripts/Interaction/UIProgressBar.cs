@@ -333,7 +333,12 @@ public class UIProgressBar : UIWidgetContainer
 		if (mFG != null)
 		{
 			UISprite sprite = mFG as UISprite;
-
+			if (value == 0) {
+				NGUITools.SetActiveSelf(sprite.gameObject, false);
+				return;
+			} else if (!NGUITools.GetActive(sprite)) {
+				NGUITools.SetActiveSelf(sprite.gameObject, true);
+			}
 			if (isHorizontal)
 			{
 				if (sprite != null && sprite.type == UISprite.Type.Filled)
