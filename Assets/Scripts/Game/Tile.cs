@@ -8,8 +8,11 @@ public class Tile : MonoBehaviour {
   public int tileValue;
   public Tile mergeFromTile;
   public Position previousPosition;
+
+	private int glowingValue = 512;
   
   public UISprite tileBackground;
+  public UISprite glowingBackground;
   public UIPlayTween playTween;
 
   public void Init(Position pos, int value, Vector3 transPos) {
@@ -18,8 +21,14 @@ public class Tile : MonoBehaviour {
     this.tileValue = value;
     tileBackground.spriteName = "tileTheme1_" + value;
     tileBackground.width = tileBackground.height = GameManager.Instance.cellSize;
+    glowingBackground.width = glowingBackground.height = (int)(GameManager.Instance.cellSize * 1.15f);
     // tileValueLabel.text = value.ToString();
     transform.position = transPos;
+		if (tileValue >= glowingValue) {
+			glowingBackground.gameObject.SetActive(true);
+		} else {
+			glowingBackground.gameObject.SetActive(false);
+		}
   }
   
   public void SavePosition() {
@@ -50,6 +59,11 @@ public class Tile : MonoBehaviour {
     y = pos.y;
     tileValue = mergeFromTile.tileValue * 2;
     tileBackground.depth = 5;
+		if (tileValue >= glowingValue) {
+			glowingBackground.gameObject.SetActive(true);
+		} else {
+			glowingBackground.gameObject.SetActive(false);
+		}
     LeanTween.move(gameObject, GridManager.Instance.GetCell(pos).thisTransform.position, 0.1f).setOnComplete(FinishMovingMerge);
   }
   
