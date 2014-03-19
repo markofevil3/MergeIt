@@ -27,7 +27,10 @@ public class ScreenManager : MonoBehaviour {
 		
 		OpenMainScreen();
 		FacebookInit();
-		GAEvent myEvent = new GAEvent("OpenGame", "OpenGame");
+	}
+	
+	void Start() {
+	  GAEvent myEvent = new GAEvent("OpenGame", "OpenGame");
 		GoogleAnalytics.instance.Add(myEvent);
 		GoogleAnalytics.instance.Dispatch();
 	}
