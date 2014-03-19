@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
   void Update() {
-    if (GameManager.started && !GameManager.paused) {
+    if (GameManager.started && !GameManager.paused && !GameManager.isMoving) {
 	    #if UNITY_EDITOR
   			MouseSwipe();
   			if(Input.GetButtonDown("up")){

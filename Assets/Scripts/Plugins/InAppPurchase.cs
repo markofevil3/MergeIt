@@ -36,6 +36,8 @@ public class InAppPurchase : MonoBehaviour {
     if ( products != null && products.Count > 0 ) {
 			StoreKitBinding.purchaseProduct( IndexToProductIdentifier(index), 1 );
 			isPurchasing = true;
+		} else {
+		  StoreKitBinding.requestProductData(productIdentifiers);
 		}
   }
   
@@ -55,7 +57,6 @@ public class InAppPurchase : MonoBehaviour {
 	
 	void productListRequestFailedEvent( string error ) {
 		Debug.Log( "productListRequestFailedEvent: " + error );
-		StoreKitBinding.requestProductData(productIdentifiers);
 	}
 	
 

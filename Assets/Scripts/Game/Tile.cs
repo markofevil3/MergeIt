@@ -20,7 +20,7 @@ public class Tile : MonoBehaviour {
     this.y = pos.y;
     this.tileValue = value;
     tileBackground.atlas = GameManager.Instance.currentAtlas;
-    tileBackground.spriteName = "tileTheme1_" + value;
+    tileBackground.spriteName = "tile_" + value;
     tileBackground.width = tileBackground.height = GameManager.Instance.cellSize;
     glowingBackground.width = glowingBackground.height = (int)(GameManager.Instance.cellSize * 1.15f);
     // tileValueLabel.text = value.ToString();
@@ -49,7 +49,7 @@ public class Tile : MonoBehaviour {
   }
   
   void FinishMovingMerge() {
-    tileBackground.spriteName = "tileTheme1_" + tileValue;
+    tileBackground.spriteName = "tile_" + tileValue;
     playTween.Play(true);
     SetDepthToNormal();
   }

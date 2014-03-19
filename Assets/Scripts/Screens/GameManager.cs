@@ -8,6 +8,7 @@ public class GameManager : BaseScreen {
   public static bool started = false;
   public static bool paused = false;
   public static bool stopped = false;
+  public static bool isMoving = false;
   
   private int gameSize = 4;
   private int startTiles = 2;
@@ -43,7 +44,6 @@ public class GameManager : BaseScreen {
 		transform.GetComponent<GridManager>().Init(gameSize);
 		transform.GetComponent<TileManager>().Init();
 		EventDelegate.Set (btnPause.onClick, OpenPausePopup);
-		
 		GAEvent myEvent = new GAEvent("PlayGame", currentTheme.ToString());
 		GoogleAnalytics.instance.Add(myEvent);
 		GoogleAnalytics.instance.Dispatch();
@@ -58,6 +58,8 @@ public class GameManager : BaseScreen {
 			  AdsManager.Instance.ShowAds();
 		  }
 		}
+		isMoving = false;
+		
 	}
   
   public bool IsFirstPlay() {
@@ -68,6 +70,7 @@ public class GameManager : BaseScreen {
     started = false;
     paused = false;
     stopped = false;
+    isMoving = false;
     score = 0;
   	highestTile = 2;
   	GridManager.Instance.Restart();
@@ -75,9 +78,6 @@ public class GameManager : BaseScreen {
   	AddStartTiles();
     // Invoke("StartGame", 0.2f);
     StartGame();
-		GAEvent myEvent = new GAEvent("PlayGame", currentTheme.ToString());
-		GoogleAnalytics.instance.Add(myEvent);
-		GoogleAnalytics.instance.Dispatch();
   }
   
   void StartGame() {
@@ -173,11 +173,13 @@ public class GameManager : BaseScreen {
       }
     }
     if (moved) {
+      isMoving = true;
       Invoke("AddTileAfterMove", 0.1f);
     }
   }
   
   private void AddTileAfterMove() {
+    isMoving = false;
     AddRandomTile();
     if (!MovesAvailable()) {
       Invoke("OpenResultScreen", 1.0f);
