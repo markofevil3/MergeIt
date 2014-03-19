@@ -94,7 +94,6 @@ public class Popup : MonoBehaviour {
   }
   
   public virtual void CloseNoAnimation() {
-		Debug.Log("CloseNoAnimation");
     HandleClosePopupCallback();
     PopupManager.Instance.HideDimNoAnimation();
   }

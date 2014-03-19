@@ -52,7 +52,6 @@ public class TutorialPopup : Popup {
 		if (!scrollView.canMoveVertically) offset.y = dragPanel.cachedTransform.localPosition.y;
 		SpringPanel.Begin(dragPanel.cachedGameObject, offset, 6f);
 		currentTut = nextTut;
-		Debug.Log("ChangeTutorial " + GameManager.Instance.IsFirstPlay() + " " + (nextTut == 0));
 		if (GameManager.Instance != null && GameManager.Instance.IsFirstPlay() && nextTut == 0) {
 			EventDelegate.Set (tapToContinueEvent.onClick, CloseNoAnimation);
 		}

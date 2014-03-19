@@ -7,5 +7,5 @@ public class MainScreenThemeScript : MonoBehaviour {
 	public GameObject playText;
 	public GameObject themeAchievement;
 	public GameObject themePurchase;
-	
+	public UIProgressBar achievementProgress;
 }

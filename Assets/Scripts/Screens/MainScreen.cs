@@ -65,7 +65,6 @@ public class MainScreen : BaseScreen {
 	}
 	
 	private void UpdateThemeButton(int index) {
-		Debug.Log("UpdateThemeButton--" + index);
 	  switch(index) {
 	    case 0:
 	      themeScripts[index].playText.SetActive(true);
@@ -81,14 +80,14 @@ public class MainScreen : BaseScreen {
 	        themeScripts[index].themeAchievement.SetActive(false);
 	        themeScripts[index].themePurchase.SetActive(false);
 	        EventDelegate.Set (themeScripts[index].btnPlay.onClick, OpenGameScreen);
-	      } else {
+	      } else {							
 	        themeScripts[index].playText.SetActive(false);
 	        themeScripts[index].themeAchievement.SetActive(true);
 	        themeScripts[index].themePurchase.SetActive(false);
 	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, OpenGameScreen);
 	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, PurchaseTheme);
-	        int score = PlayerPrefs.GetInt("totalScore");
-	        achievementProgress.value = (float)score / achievementScore;
+	        int score = PlayerPrefs.HasKey("totalScore") ? PlayerPrefs.GetInt("totalScore") : 0;
+	        themeScripts[index].achievementProgress.value = (float)score / achievementScore;
 	      }
 	      btnPrevButton.isEnabled = true;
 	      btnNextButton.isEnabled = true;
