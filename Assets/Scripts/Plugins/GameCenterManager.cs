@@ -32,6 +32,8 @@ public class GameCenterManager : MonoBehaviour {
   public void ShowLeaderboard() {
     if (isLoggedIn) {
       Social.ShowLeaderboardUI();
+    } else {
+      Login();
     }
   }
   
