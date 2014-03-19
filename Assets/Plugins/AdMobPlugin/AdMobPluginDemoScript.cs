@@ -3,12 +3,13 @@ using UnityEngine;
 
 // Example script showing how you can easily call into the AdMobPlugin.
 public class AdMobPluginDemoScript : MonoBehaviour {
-
+	#if UNITY_IOS
+	
     void Start()
 	{
         // Pass in any extras you have as JSON.
         string extras = "{\"color_bg\":\"AAAAFF\", \"color_bg_top\":\"FFFFFF\"}";
-        AdMobPlugin.CreateBannerView("a153258928c68c6", AdMobPlugin.AdSize.Banner, true);
+        AdMobPlugin.CreateBannerView("a14e41ba0bac41b", AdMobPlugin.AdSize.Banner, true);
         print("Created Banner View");
         AdMobPlugin.RequestBannerAd(true, extras);
         print("Requested Banner Ad");
@@ -66,4 +67,5 @@ public class AdMobPluginDemoScript : MonoBehaviour {
 	{
         print("HandleLeavingApplication event received");
     }
+	#endif
 }

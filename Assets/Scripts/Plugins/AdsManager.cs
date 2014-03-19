@@ -7,6 +7,7 @@ public class AdsManager : MonoBehaviour {
   
   private string IOS_IPHONE_KEY = "a153258928c68c6";
   private string IOS_IPAD_KEY = "a15325a3e5e9d2c";
+  private string ANDROID_KEY = "a15329210136de3";
   
   void Awake() {
     Instance = this;
@@ -14,27 +15,47 @@ public class AdsManager : MonoBehaviour {
   
   public void ShowAds() {
     string extras = "{\"color_bg\":\"AAAAFF\", \"color_bg_top\":\"FFFFFF\"}";
-    if (Utils.IsTablet()) {
-      AdMobPlugin.CreateBannerView(IOS_IPAD_KEY, AdMobPlugin.AdSize.Leaderboard, true);
-      AdMobPlugin.RequestBannerAd(false, extras);
-    } else {
-      AdMobPlugin.CreateBannerView(IOS_IPHONE_KEY, AdMobPlugin.AdSize.SmartBanner, true);
-      AdMobPlugin.RequestBannerAd(false, extras);
-    }
+		#if UNITY_IPHONE
+		  if (Utils.IsTablet()) {
+	      AdMobPlugin.CreateBannerView(IOS_IPAD_KEY, AdMobPlugin.AdSize.Leaderboard, true);
+	      AdMobPlugin.RequestBannerAd(false, extras);
+	    } else {
+	      AdMobPlugin.CreateBannerView(IOS_IPHONE_KEY, AdMobPlugin.AdSize.SmartBanner, true);
+	      AdMobPlugin.RequestBannerAd(false, extras);
+	    }
+		#endif
+		#if UNITY_ANDROID
+			AdMobAndroidPlugin.CreateBannerView(ANDROID_KEY, AdMobAndroidPlugin.AdSize.Banner, true);
+			AdMobAndroidPlugin.RequestBannerAd(true);
+		#endif
   }
-  
-  public void HideAds() {
-    AdMobPlugin.HideBannerView();
-  }
-  
-  void OnEnable(){
-    AdMobPlugin.ReceivedAd += HandleReceivedAd;
-    AdMobPlugin.FailedToReceiveAd += HandleFailedToReceiveAd;
-    AdMobPlugin.ShowingOverlay += HandleShowingOverlay;
-    AdMobPlugin.DismissingOverlay += HandleDismissingOverlay;
-    AdMobPlugin.DismissedOverlay += HandleDismissedOverlay;
-    AdMobPlugin.LeavingApplication += HandleLeavingApplication;
-  }
+
+  #if UNITY_IPHONE
+		public void HideAds() {
+	    AdMobPlugin.HideBannerView();
+	  }
+	  void OnEnable(){
+	    AdMobPlugin.ReceivedAd += HandleReceivedAd;
+	    AdMobPlugin.FailedToReceiveAd += HandleFailedToReceiveAd;
+	    AdMobPlugin.ShowingOverlay += HandleShowingOverlay;
+	    AdMobPlugin.DismissingOverlay += HandleDismissingOverlay;
+	    AdMobPlugin.DismissedOverlay += HandleDismissedOverlay;
+	    AdMobPlugin.LeavingApplication += HandleLeavingApplication;
+	  }
+   #endif
+
+	#if UNITY_ANDROID
+		public void HideAds() {
+	    AdMobAndroidPlugin.HideBannerView();
+	  }
+	  void OnEnable() {
+		  AdMobAndroidPlugin.ReceivedAd += HandleReceivedAd;
+      AdMobAndroidPlugin.FailedToReceiveAd += HandleFailedToReceiveAd;
+      AdMobAndroidPlugin.ShowingOverlay += HandleShowingOverlay;
+      AdMobAndroidPlugin.DismissedOverlay += HandleDismissedOverlay;
+      AdMobAndroidPlugin.LeavingApplication += HandleLeavingApplication;
+	  }
+	#endif
   
   public void HandleReceivedAd(){
     print("HandleReceivedAd event received");

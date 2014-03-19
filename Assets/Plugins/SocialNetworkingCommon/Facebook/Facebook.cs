@@ -181,7 +181,7 @@ public class Facebook : P31RestKit
 
 		yield return www;
 
-		if( !string.IsNullOrEmpty( www.error ) )
+		if( string.IsNullOrEmpty( www.error ) )
 		{
 			Debug.Log( "Error attempting to load profile image: " + www.error );
 			if( completionHandler != null )

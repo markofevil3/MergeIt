@@ -34,7 +34,7 @@ public class ScreenManager : MonoBehaviour {
     FacebookBinding.init();
     #endif
 		#if UNITY_ANDROID
-      // InAppBillingAndroid.Init();
+    FacebookAndroid.init();
 		#endif
 	}
 	

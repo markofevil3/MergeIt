@@ -7,7 +7,8 @@ using UnityEngine;
 using AdMobMobilePlugin = AdMobPluginiOS;
 
 public class AdMobPlugin : MonoBehaviour {
-
+	#if UNITY_IPHONE
+	
     // Defines string values for supported ad sizes.
     public class AdSize
     {
@@ -127,4 +128,5 @@ public class AdMobPlugin : MonoBehaviour {
     {
         LeavingApplication();
     }
+	#endif
 }

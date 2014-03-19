@@ -65,6 +65,7 @@ public class MainScreen : BaseScreen {
 	}
 	
 	private void UpdateThemeButton(int index) {
+		Debug.Log("UpdateThemeButton--" + index);
 	  switch(index) {
 	    case 0:
 	      themeScripts[index].playText.SetActive(true);
