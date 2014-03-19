@@ -2,7 +2,7 @@ using UnityEngine;
 
 // Example script showing how you can easily call into the GoogleMobileAdsPlugin.
 public class GoogleMobileAdsDemoScript : MonoBehaviour {
-
+		#if UNITY_ANDROID
     void Start()
     {
 		print("Started");
@@ -59,4 +59,5 @@ public class GoogleMobileAdsDemoScript : MonoBehaviour {
     {
         print("HandleLeavingApplication event received");
     }
+	#endif
 }
