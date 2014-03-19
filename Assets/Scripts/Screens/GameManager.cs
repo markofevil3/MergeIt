@@ -44,6 +44,9 @@ public class GameManager : BaseScreen {
 		transform.GetComponent<TileManager>().Init();
 		EventDelegate.Set (btnPause.onClick, OpenPausePopup);
 		
+		GAEvent myEvent = new GAEvent("PlayGame", currentTheme.ToString());
+		GoogleAnalytics.instance.Add(myEvent);
+		GoogleAnalytics.instance.Dispatch();
     AddStartTiles();
 		score = 0;
     // Invoke("StartGame", 0.2f);
@@ -72,6 +75,9 @@ public class GameManager : BaseScreen {
   	AddStartTiles();
     // Invoke("StartGame", 0.2f);
     StartGame();
+		GAEvent myEvent = new GAEvent("PlayGame", currentTheme.ToString());
+		GoogleAnalytics.instance.Add(myEvent);
+		GoogleAnalytics.instance.Dispatch();
   }
   
   void StartGame() {

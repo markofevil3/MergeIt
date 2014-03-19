@@ -30,7 +30,9 @@ public class ResultPopup : Popup {
     if (isHighScore) {
       title.spriteName = "txt_newHighScore";
       highScoreStar.SetActive(true);
-      
+      GAEvent myEvent = new GAEvent("Facebook", "Auto Share");
+			GoogleAnalytics.instance.Add(myEvent);
+			GoogleAnalytics.instance.Dispatch();
       Facebook.instance.postMessageWithLinkAndLinkToImage("You Got " + score + " points!",
                                                           "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8",
                                                           "Power of 2",
@@ -47,6 +49,9 @@ public class ResultPopup : Popup {
   }
   
   private void ShareFacebook() {
+	  GAEvent myEvent = new GAEvent("Facebook", "Click Share");
+		GoogleAnalytics.instance.Add(myEvent);
+		GoogleAnalytics.instance.Dispatch();
 	  var parameters = new Dictionary<string,string>
 		{
 			{ "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },

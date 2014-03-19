@@ -78,6 +78,11 @@ public class InAppPurchase : MonoBehaviour {
 	
 	void purchaseSuccessfulEvent( StoreKitTransaction transaction ) {
 		Debug.Log( "purchaseSuccessfulEvent: " + transaction );
+		
+		GAPurchaseItem purchasedItem = new GAPurchaseItem("Purchase", "Success - " + transaction.productIdentifier, 0.99m);
+		GoogleAnalytics.instance.Add(purchasedItem);
+		GoogleAnalytics.instance.Dispatch();
+		
 		isPurchasing = false;
 		PlayerPrefs.SetInt(transaction.productIdentifier, 1);
 		if (MainScreen.Instance != null) {
