@@ -25,8 +25,8 @@ public class AdsManager : MonoBehaviour {
 	    }
 		#endif
 		#if UNITY_ANDROID
-			AdMobAndroidPlugin.CreateBannerView(ANDROID_KEY, AdMobAndroidPlugin.AdSize.Banner, true);
-			AdMobAndroidPlugin.RequestBannerAd(true);
+			GoogleMobileAdsPlugin.CreateBannerView(ANDROID_KEY, GoogleMobileAdsPlugin.AdSize.Banner, true);
+			GoogleMobileAdsPlugin.RequestBannerAd(true);
 		#endif
   }
 
@@ -46,14 +46,14 @@ public class AdsManager : MonoBehaviour {
 
 	#if UNITY_ANDROID
 		public void HideAds() {
-	    AdMobAndroidPlugin.HideBannerView();
+	    GoogleMobileAdsPlugin.HideBannerView();
 	  }
 	  void OnEnable() {
-		  AdMobAndroidPlugin.ReceivedAd += HandleReceivedAd;
-      AdMobAndroidPlugin.FailedToReceiveAd += HandleFailedToReceiveAd;
-      AdMobAndroidPlugin.ShowingOverlay += HandleShowingOverlay;
-      AdMobAndroidPlugin.DismissedOverlay += HandleDismissedOverlay;
-      AdMobAndroidPlugin.LeavingApplication += HandleLeavingApplication;
+		  GoogleMobileAdsPlugin.ReceivedAd += HandleReceivedAd;
+      GoogleMobileAdsPlugin.FailedToReceiveAd += HandleFailedToReceiveAd;
+      GoogleMobileAdsPlugin.ShowingOverlay += HandleShowingOverlay;
+      GoogleMobileAdsPlugin.DismissedOverlay += HandleDismissedOverlay;
+      GoogleMobileAdsPlugin.LeavingApplication += HandleLeavingApplication;
 	  }
 	#endif
   
