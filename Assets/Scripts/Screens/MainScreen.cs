@@ -135,11 +135,16 @@ public class MainScreen : BaseScreen {
 	  GAEvent myEvent = new GAEvent("Purchase", "Click Purchase");
 		GoogleAnalytics.instance.Add(myEvent);
 		GoogleAnalytics.instance.Dispatch();
+		#if UNITY_IPHONE
 	  if (InAppPurchase.Instance != null) {
-      #if UNITY_IPHONE
 	      InAppPurchase.Instance.PurchaseProduct(currentTheme);
-	    #endif
 	  }
+    #endif
+	  #if UNITY_ANDROID
+	  if (InAppPurchaseAndroid.Instance != null) {
+	    InAppPurchaseAndroid.Instance.PurchaseProduct(currentTheme);
+	  }
+		#endif
 	}
 	
 	private void PrevTheme() {

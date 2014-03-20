@@ -45,18 +45,24 @@ public class GoogleMobileAdsPlugin : MonoBehaviour {
 	    // Create a banner view and add it into the view hierarchy.
 	    public static void CreateBannerView(string publisherId, AdSize adSize, bool positionAtTop)
 	    {
-	        AndroidJavaClass playerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-	        AndroidJavaObject activity = playerClass.GetStatic<AndroidJavaObject>("currentActivity");
-			AndroidJavaClass pluginClass = new AndroidJavaClass(PluginClassName);
-	        pluginClass.CallStatic("createBannerView",
-	            new object[4] { activity, publisherId, adSize.ToString(), positionAtTop });
+	      if (Application.platform == RuntimePlatform.Android) {
+	            AndroidJavaClass playerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+    	        AndroidJavaObject activity = playerClass.GetStatic<AndroidJavaObject>("currentActivity");
+    			AndroidJavaClass pluginClass = new AndroidJavaClass(PluginClassName);
+    	        pluginClass.CallStatic("createBannerView",
+    	            new object[4] { activity, publisherId, adSize.ToString(), positionAtTop });
+  			}
+
 	    }
 
 	    // Request a new ad for the banner view without any extras.
 	    public static void RequestBannerAd(bool isTesting)
 	    {
+	      if (Application.platform == RuntimePlatform.Android) {
+	      
 			AndroidJavaClass pluginClass = new AndroidJavaClass(PluginClassName);
 	        pluginClass.CallStatic("requestBannerAd", new object[1] {isTesting});
+        }
 	    }
 
 	    // Request a new ad for the banner view with extras.
