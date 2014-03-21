@@ -46,7 +46,7 @@ public class ResultPopup : Popup {
   }
   
   private void ShareFacebook() {
-	  Facebook.instance.postMessageWithLinkAndLinkToImage("You Got " + score + " points!",
+	  Facebook.instance.postMessageWithLinkAndLinkToImage("I got " + score + " points! Can you beat my score?",
                                                         "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8",
                                                         "Power of 2",
                                                         "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
