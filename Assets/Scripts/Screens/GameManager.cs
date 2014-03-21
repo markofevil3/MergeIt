@@ -12,7 +12,7 @@ public class GameManager : BaseScreen {
   
   private int gameSize = 4;
   private int startTiles = 2;
-	private int wonTileValue = 128;
+	private int wonTileValue = 2048;
 	private int score;
 	private int highestTile = 2;
   
