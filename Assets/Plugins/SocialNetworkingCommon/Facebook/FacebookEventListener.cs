@@ -10,7 +10,7 @@ public class FacebookEventListener : MonoBehaviour
 	void OnEnable()
 	{
 		FacebookManager.sessionOpenedEvent += sessionOpenedEvent;
-		FacebookManager.loginFailedEvent += loginFailedEvent;
+		// FacebookManager.loginFailedEvent += loginFailedEvent;
 		FacebookManager.dialogCompletedWithUrlEvent += dialogCompletedWithUrlEvent;
 		FacebookManager.dialogFailedEvent += dialogFailedEvent;
 
@@ -18,7 +18,7 @@ public class FacebookEventListener : MonoBehaviour
 		FacebookManager.graphRequestFailedEvent += facebookCustomRequestFailed;
 		FacebookManager.facebookComposerCompletedEvent += facebookComposerCompletedEvent;
 
-		FacebookManager.reauthorizationFailedEvent += reauthorizationFailedEvent;
+		// FacebookManager.reauthorizationFailedEvent += reauthorizationFailedEvent;
 		FacebookManager.reauthorizationSucceededEvent += reauthorizationSucceededEvent;
 
 		FacebookManager.shareDialogFailedEvent += shareDialogFailedEvent;
@@ -30,7 +30,7 @@ public class FacebookEventListener : MonoBehaviour
 	{
 		// Remove all the event handlers when disabled
 		FacebookManager.sessionOpenedEvent -= sessionOpenedEvent;
-		FacebookManager.loginFailedEvent -= loginFailedEvent;
+		// FacebookManager.loginFailedEvent -= loginFailedEvent;
 		FacebookManager.dialogCompletedWithUrlEvent -= dialogCompletedWithUrlEvent;
 		FacebookManager.dialogFailedEvent -= dialogFailedEvent;
 
@@ -38,7 +38,7 @@ public class FacebookEventListener : MonoBehaviour
 		FacebookManager.graphRequestFailedEvent -= facebookCustomRequestFailed;
 		FacebookManager.facebookComposerCompletedEvent -= facebookComposerCompletedEvent;
 
-		FacebookManager.reauthorizationFailedEvent -= reauthorizationFailedEvent;
+		// FacebookManager.reauthorizationFailedEvent -= reauthorizationFailedEvent;
 		FacebookManager.reauthorizationSucceededEvent -= reauthorizationSucceededEvent;
 
 		FacebookManager.shareDialogFailedEvent -= shareDialogFailedEvent;

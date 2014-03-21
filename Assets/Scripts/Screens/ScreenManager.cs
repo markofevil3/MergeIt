@@ -26,13 +26,13 @@ public class ScreenManager : MonoBehaviour {
 		atlasManager.Init();
 		
 		OpenMainScreen();
-		FacebookInit();
 	}
 	
 	void Start() {
 	  GAEvent myEvent = new GAEvent("OpenGame", "OpenGame");
 		GoogleAnalytics.instance.Add(myEvent);
 		GoogleAnalytics.instance.Dispatch();
+		FacebookInit();
 	}
 	
 	void FacebookInit() {

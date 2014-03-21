@@ -12,7 +12,7 @@ public class GameManager : BaseScreen {
   
   private int gameSize = 4;
   private int startTiles = 2;
-	private int wonTileValue = 2048;
+	private int wonTileValue = 128;
 	private int score;
 	private int highestTile = 2;
   
@@ -149,7 +149,7 @@ public class GameManager : BaseScreen {
         if (tile != null) {
           Position[] positions = FindFarthestPosition(new Position(tile.x, tile.y), vector);
           Tile nextTile = GridManager.Instance.GetCellContent(new Position(positions[1].x, positions[1].y));
-          if (nextTile != null && nextTile.tileValue == tile.tileValue && nextTile.mergeFromTile == null) {
+          if (nextTile != null && nextTile.tileValue == tile.tileValue && tile.tileValue < wonTileValue && nextTile.mergeFromTile == null) {
             GridManager.Instance.InsertTile(GridManager.Instance.GetCell(new Position(nextTile.x, nextTile.y)), nextTile.tileValue * 2);
             GridManager.Instance.RemoveTile(GridManager.Instance.GetCell(new Position(tile.x, tile.y)));
             tile.GetMerge(new Position(nextTile.x, nextTile.y), nextTile.tileValue * 2, nextTile);
@@ -159,10 +159,10 @@ public class GameManager : BaseScreen {
 						  highestTile = tile.tileValue;
 						}
 						scoreLabel.text = score.ToString();
-						if (tile.tileValue == wonTileValue) {
-						  Invoke("OpenResultScreen", 1.0f);
-              // OpenResultScreen();
-						}
+						// if (tile.tileValue == wonTileValue) {
+						//   Invoke("OpenResultScreen", 1.0f);
+						//               // OpenResultScreen();
+						// }
           } else {
             MoveTile(tile, positions[0]);
           }
