@@ -13,6 +13,7 @@ public class ScreenManager : MonoBehaviour {
 	public MainScreen mainScreenScript;
 	public GameManager gameManagerScript;
 	public AtlasManager atlasManager;
+	public CGoogleAnalytics ga;
 	
 	public bool isFbInit = false;
 
@@ -27,11 +28,27 @@ public class ScreenManager : MonoBehaviour {
 	}
 	
 	void Start() {
-	  GAEvent myEvent = new GAEvent("OpenGame", "OpenGame");
-		GoogleAnalytics.instance.Add(myEvent);
-		GoogleAnalytics.instance.Dispatch();
+    TrackScreen("MainScreen");
 		FacebookInit();
 		OpenMainScreen();
+	}
+	
+	public void TrackScreen(string screenName) {
+  	// session starts
+		ga.analytics.TrackSession(true);
+		// tracking screens
+		ga.analytics.TrackAppview(screenName);
+		// session ends
+		ga.analytics.TrackSession(false);
+	}
+
+	public void TrackEvent(string category, string label, string action, int value) {
+	  // session starts
+		ga.analytics.TrackSession(true);
+		// tracking screens
+		ga.analytics.TrackEvent(category, label, action, value);
+		// session ends
+		ga.analytics.TrackSession(false);
 	}
 	
 	void FacebookInit() {

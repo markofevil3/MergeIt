@@ -134,9 +134,11 @@ public class MainScreen : BaseScreen {
 	
 	private void PurchaseTheme() {
 	  Debug.Log("PurchaseTheme-" + currentTheme);
-	  GAEvent myEvent = new GAEvent("Purchase", "Click Purchase");
-		GoogleAnalytics.instance.Add(myEvent);
-		GoogleAnalytics.instance.Dispatch();
+    //    GAEvent myEvent = new GAEvent("Purchase", "Click Purchase");
+    // GoogleAnalytics.instance.Add(myEvent);
+    // GoogleAnalytics.instance.Dispatch();
+		ScreenManager.Instance.TrackEvent("InAppPurchase", "Click Purchase", "Click Purchase", 1);
+		
 		#if UNITY_IPHONE
 	  if (InAppPurchase.Instance != null) {
 	      InAppPurchase.Instance.PurchaseProduct(currentTheme);
@@ -177,9 +179,11 @@ public class MainScreen : BaseScreen {
 	}
 	
 	void OpenLeaderboard() {
-		GAEvent myEvent = new GAEvent("Leaderboard", "OpenLeaderboard");
-		GoogleAnalytics.instance.Add(myEvent);
-		GoogleAnalytics.instance.Dispatch();
+	  ScreenManager.Instance.TrackEvent("Leaderboard", "OpenLeaderboard", "OpenLeaderboard", 1);
+		
+    // GAEvent myEvent = new GAEvent("Leaderboard", "OpenLeaderboard");
+    // GoogleAnalytics.instance.Add(myEvent);
+    // GoogleAnalytics.instance.Dispatch();
 	  if (!InAppPurchase.isPurchasing) {
 	    GameCenterManager.Instance.ShowLeaderboard();
 	  }

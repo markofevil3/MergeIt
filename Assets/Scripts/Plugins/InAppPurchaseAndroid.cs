@@ -86,10 +86,11 @@ public class InAppPurchaseAndroid : MonoBehaviour {
 	void purchaseSucceededEvent( GooglePurchase purchase )
 	{
 		InAppPurchase.isPurchasing = false;
+		ScreenManager.Instance.TrackEvent("InAppPurchase", "Purchase", "Success - " + purchase.packageName, 1);
 		
-		GAPurchaseItem purchasedItem = new GAPurchaseItem("Purchase", "Success - " + purchase.packageName, 0.99m);
-		GoogleAnalytics.instance.Add(purchasedItem);
-		GoogleAnalytics.instance.Dispatch();
+    // GAPurchaseItem purchasedItem = new GAPurchaseItem("Purchase", "Success - " + purchase.packageName, 0.99m);
+    // GoogleAnalytics.instance.Add(purchasedItem);
+    // GoogleAnalytics.instance.Dispatch();
 		
 		PlayerPrefs.SetInt(GetSaveKey(purchase.packageName), 1);
 		if (MainScreen.Instance != null) {
