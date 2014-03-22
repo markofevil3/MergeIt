@@ -102,9 +102,9 @@ public class MainScreen : BaseScreen {
           EventDelegate.Set(themeScripts[index].btnPlay.onClick, OpenGameScreen);
         } else {
           themeScripts[index].playText.SetActive(false);
-                  themeScripts[index].themeAchievement.SetActive(false);
-                  themeScripts[index].themePurchase.SetActive(true);
-                  EventDelegate.Set(themeScripts[index].btnPlay.onClick, PurchaseTheme);
+          themeScripts[index].themeAchievement.SetActive(false);
+          themeScripts[index].themePurchase.SetActive(true);
+          EventDelegate.Set(themeScripts[index].btnPlay.onClick, PurchaseTheme);
         }
     		btnPrevButton.isEnabled = true;
 	      btnNextButton.isEnabled = false;
