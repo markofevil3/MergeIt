@@ -17,6 +17,7 @@ public class MainScreen : BaseScreen {
 	public Transform[] themes;
 	public MainScreenThemeScript[] themeScripts;
 	public UIPanel dragPanel;
+	public UIStretch dragPanelStretch;
 	public UIScrollView scrollView;
 	public UIProgressBar achievementProgress;
 	
@@ -37,6 +38,7 @@ public class MainScreen : BaseScreen {
       PlayerPrefs.SetInt("theme", 0);
       currentTheme = 0;
     }
+    dragPanelStretch.Reset();
     SetCurrentTheme(currentTheme);
 	}
 	

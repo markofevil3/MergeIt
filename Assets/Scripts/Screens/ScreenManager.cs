@@ -24,8 +24,6 @@ public class ScreenManager : MonoBehaviour {
 		useGUILayout = false;
 		
 		atlasManager.Init();
-		
-		OpenMainScreen();
 	}
 	
 	void Start() {
@@ -33,6 +31,7 @@ public class ScreenManager : MonoBehaviour {
 		GoogleAnalytics.instance.Add(myEvent);
 		GoogleAnalytics.instance.Dispatch();
 		FacebookInit();
+		OpenMainScreen();
 	}
 	
 	void FacebookInit() {
