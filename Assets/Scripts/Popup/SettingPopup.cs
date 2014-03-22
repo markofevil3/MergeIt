@@ -14,6 +14,9 @@ public class SettingPopup : Popup {
   public GameObject settingPanel;
   public GameObject creditsPanel;
   
+  private string ANDROID_LINK = "https://play.google.com/store/apps/developer?id=CanvasGames";
+  private string IOS_LINK = "https://itunes.apple.com/us/artist/bui-p-quan/id718172156";
+  
   public override void Init() {
     base.Init();
     EventDelegate.Set (btnClose.onClick, Close);
@@ -21,6 +24,7 @@ public class SettingPopup : Popup {
 		EventDelegate.Set (btnMoreGame.onClick, OpenMoreGame);
 		EventDelegate.Set (btnSound.onClick, SwitchSound);
 		EventDelegate.Set (btnBack.onClick, OpenSettingPanel);
+		EventDelegate.Set (btnMoreGame.onClick, OpenMoreGameLink);
 		backgroundStretch.Reset();
     btnCloseAnchor.Init();
     GameManager.paused = true;
@@ -34,6 +38,15 @@ public class SettingPopup : Popup {
   public override void HandleClosePopupCallback() {
     PopupManager.Instance.settingPopupScript = null;
     base.HandleClosePopupCallback();
+  }
+  
+  private void OpenMoreGameLink() {
+    #if UNITY_IPHONE
+      Application.OpenURL(IOS_LINK);
+    #endif
+		#if UNITY_ANDROID
+      Application.OpenURL(ANDROID_LINK);
+		#endif
   }
   
   private void OpenCreditsPanel() {

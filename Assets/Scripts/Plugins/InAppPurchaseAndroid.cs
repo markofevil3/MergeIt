@@ -9,7 +9,7 @@ public class InAppPurchaseAndroid : MonoBehaviour {
   
   private string key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2CRPVXDZInQiXYGOz+xAxYAKOFUlD6RUM7gDVaMPK39mnBkzZZh5pseSzPu0x3n8r+HTw85sg/kzVxD3Pr0j7xkHgZb6mUtmX0tQPlcrIw5ib+V93U0g+o6XCrkBTYW2lEqhWYRBQxa3Uia2Py9al3Cj32/CglGrxWnZ/UO5N4ZnqfveGfWeqM1IyRNSdxUOAUQGQSiwtC+yszTF16uOiaRLvd74dr8qIp/PpBp1Cu/B+TMne/eYF/FZNDJWtK9DONQQMUA+YsY5f8rQaoGQWxeM93dOCMEQ2JCN3eM9yZecaPbesGNd6FTWLq9VQ/NIbYWb7NvTnVlxvXb8D7buCwIDAQAB";
   
-  string[] productIdentifiers = new string[] { "com.buiphiquan.candytheme", "com.buiphiquan.jeweltheme" };
+  string[] productIdentifiers = new string[] { "com.buiphiquan.jeweltheme", "com.buiphiquan.candytheme" };
   private bool finishedQueryInventory = false;
   
   void Start() {
@@ -109,16 +109,16 @@ public class InAppPurchaseAndroid : MonoBehaviour {
 	      return "jeweltheme";
 	    break;
 	  }
-	  return "candytheme";
+	  return "jeweltheme";
   }
 
 	private int ProductIdentifierToIndex(string identify) {
 	  switch(identify) {
 	    case "com.buiphiquan.candytheme":
-	      return 2;
+	      return 3;
 	    break;
 	    case "com.buiphiquan.jeweltheme":
-	      return 3;
+	      return 2;
 	    break;
 	  }
 	  return 2;

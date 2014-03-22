@@ -38,7 +38,7 @@ public class AtlasManager : MonoBehaviour {
     uiRef.replacement = (Resources.Load("Atlas/" + uiAtlasName + "/" + uiAtlasName, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
     theme1UIRef.replacement = (Resources.Load("Atlas/" + theme1UI + "/" + theme1UI, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
     theme2UIRef.replacement = (Resources.Load("Atlas/" + theme2UI + "/" + theme2UI, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
-    // theme3UIRef.replacement = (Resources.Load("Atlas/" + theme3UI + "/" + theme3UI, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
+    theme3UIRef.replacement = (Resources.Load("Atlas/" + theme3UI + "/" + theme3UI, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
     // theme4UIRef.replacement = (Resources.Load("Atlas/" + theme4UI + "/" + theme4UI, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
   }
   

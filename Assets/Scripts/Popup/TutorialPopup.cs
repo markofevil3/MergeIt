@@ -21,12 +21,12 @@ public class TutorialPopup : Popup {
     base.Init();
  		EventDelegate.Set (btnClose.onClick, CloseNoAnimation);
  		EventDelegate.Set (tutorialEvents[0].onClick, ChangeTutorial);
-		if (GameManager.Instance != null && GameManager.Instance.IsFirstPlay()) {
-			btnClose.gameObject.SetActive(false);
-			EventDelegate.Set (tutorialEvents[1].onClick, CloseNoAnimation);
-		} else {
-			EventDelegate.Set (tutorialEvents[1].onClick, ChangeTutorial);
-		}
+    // if (GameManager.Instance != null && GameManager.Instance.IsFirstPlay()) {
+    //  btnClose.gameObject.SetActive(false);
+    //  EventDelegate.Set (tutorialEvents[1].onClick, CloseNoAnimation);
+    // } else {
+		EventDelegate.Set (tutorialEvents[1].onClick, CloseNoAnimation);
+    // }
 		EventDelegate.Set (tapToContinueEvent.onClick, ChangeTutorial);
  		panelStretch.Reset();
  		titleBgStretch.Reset();

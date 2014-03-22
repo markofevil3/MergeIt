@@ -9,6 +9,7 @@ public class ScreenManager : MonoBehaviour {
 	public GameObject mainScreenPrefab;
 	public GameObject theme1Prefab;
 	public GameObject theme2Prefab;
+	public GameObject theme3Prefab;
 	
 	public MainScreen mainScreenScript;
 	public GameManager gameManagerScript;
@@ -84,6 +85,9 @@ public class ScreenManager : MonoBehaviour {
 		    break;
 		    case 1:
 		      tempGameObject = NGUITools.AddChild(parent, theme2Prefab);
+		    break;
+		    case 2:
+		      tempGameObject = NGUITools.AddChild(parent, theme3Prefab);
 		    break;
 		    default:
 		      tempGameObject = NGUITools.AddChild(parent, theme1Prefab);

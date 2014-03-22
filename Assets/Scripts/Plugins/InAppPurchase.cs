@@ -13,7 +13,7 @@ public class InAppPurchase : MonoBehaviour {
 	
   #if UNITY_IPHONE
 	  
-  string[] productIdentifiers = new string[] { "candytheme", "jeweltheme" };
+  string[] productIdentifiers = new string[] { "jeweltheme", "candytheme" };
   private List<StoreKitProduct> products;
   
 	void Start()
@@ -93,10 +93,10 @@ public class InAppPurchase : MonoBehaviour {
 	
 	private int ProductIdentifierToIndex(string identify) {
 	  switch(identify) {
-	    case "candytheme":
+	    case "jeweltheme":
 	      return 2;
 	    break;
-	    case "jeweltheme":
+	    case "candytheme":
 	      return 3;
 	    break;
 	  }
@@ -106,14 +106,14 @@ public class InAppPurchase : MonoBehaviour {
 	private string IndexToProductIdentifier(int index) {
 	  switch(index) {
 	    case 2:
-	      return "candytheme";
+	      return "jeweltheme";
 	    break;
 	    case 3:
-	      return "jeweltheme";
+	      return "candytheme";
 	    break;
 	  }
 	  Debug.Log("#################");
-	  return "candytheme";
+	  return "jeweltheme";
 	}
 	
 	void restoreTransactionsFailedEvent( string error ){

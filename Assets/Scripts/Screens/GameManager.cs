@@ -109,6 +109,7 @@ public class GameManager : BaseScreen {
       PlayerPrefs.SetInt("totalScore", score);
     }
     GameCenterManager.Instance.RegisterScore(score);
+    AdsManager.Instance.HideAds();
     PopupManager.Instance.OpenPopup(PopupManager.Type.RESULT, new object[]{score, highestTile, isHighScore});
   }
   
@@ -117,7 +118,6 @@ public class GameManager : BaseScreen {
     paused = false;
     stopped = false;
     ScreenManager.Instance.gameManagerScript = null;
-    AdsManager.Instance.HideAds();
     base.Close();
   }
   
@@ -193,7 +193,6 @@ public class GameManager : BaseScreen {
   
   private bool MovesAvailable() {
     return GridManager.Instance.IsCellsAvailable() || TileMatchesAvailable();
-    
   }
   
   private bool TileMatchesAvailable() {
@@ -205,7 +204,7 @@ public class GameManager : BaseScreen {
           for (int direction = 0; direction < 4; direction++) {
             DirectionVector vector = MapDirectionToVector((Direction)direction);
             Tile otherTile = GridManager.Instance.GetCellContent(new Position(x + vector.x, y + vector.y));
-            if (otherTile != null && otherTile.tileValue == grid.gridValue) {
+            if (otherTile != null && otherTile.tileValue == grid.gridValue && otherTile.tileValue < wonTileValue) {
               return true;
             }
           }
