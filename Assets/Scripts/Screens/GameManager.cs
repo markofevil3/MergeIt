@@ -26,6 +26,10 @@ public class GameManager : BaseScreen {
 	public UIEventTrigger btnPause;
 	public UIAtlas currentAtlas;
 	public int currentTheme;
+	public AudioClip mergeTileSound1;
+	public AudioClip mergeTileSound2;
+	public AudioClip mergeTileSound3;
+	public AudioClip swipeSound;
   public static GameManager Instance { get; private set; }
   
 	public enum Direction {
@@ -145,6 +149,7 @@ public class GameManager : BaseScreen {
     DirectionVector vector = MapDirectionToVector(direction);
     int[][] traversals = BuildTraversals(vector);
     bool moved      = false;
+    int playSoundValue = 0;
     
     TileManager.Instance.ResetAllTilesData();
     foreach (int x in traversals[0]) {
@@ -154,10 +159,12 @@ public class GameManager : BaseScreen {
           Position[] positions = FindFarthestPosition(new Position(tile.x, tile.y), vector);
           Tile nextTile = GridManager.Instance.GetCellContent(new Position(positions[1].x, positions[1].y));
           if (nextTile != null && nextTile.tileValue == tile.tileValue && tile.tileValue < wonTileValue && nextTile.mergeFromTile == null) {
-            GridManager.Instance.InsertTile(GridManager.Instance.GetCell(new Position(nextTile.x, nextTile.y)), nextTile.tileValue * 2);
+            int mergeTileValue = nextTile.tileValue * 2;
+            GridManager.Instance.InsertTile(GridManager.Instance.GetCell(new Position(nextTile.x, nextTile.y)), mergeTileValue);
             GridManager.Instance.RemoveTile(GridManager.Instance.GetCell(new Position(tile.x, tile.y)));
-            tile.GetMerge(new Position(nextTile.x, nextTile.y), nextTile.tileValue * 2, nextTile);
+            tile.GetMerge(new Position(nextTile.x, nextTile.y), mergeTileValue, nextTile);
             TileManager.Instance.RemoveTile(nextTile);
+            playSoundValue = playSoundValue < mergeTileValue ? mergeTileValue : playSoundValue;
 						score += tile.tileValue;
 						if (tile.tileValue > highestTile) {
 						  highestTile = tile.tileValue;
@@ -177,8 +184,31 @@ public class GameManager : BaseScreen {
       }
     }
     if (moved) {
+      PlaySoundWhenMerge(playSoundValue);
+      NGUITools.PlaySound(swipeSound, 1);
       isMoving = true;
       Invoke("AddTileAfterMove", 0.1f);
+    }
+  }
+  
+  private void PlaySoundWhenMerge(int tileValue) {
+    switch(tileValue) {
+      case 4:
+      case 8:
+      case 16:
+      case 32:
+        NGUITools.PlaySound(mergeTileSound1, 1);
+      break;
+      case 64:
+      case 128:
+      case 256:
+        NGUITools.PlaySound(mergeTileSound2, 1);
+      break;
+      case 512:
+      case 1024:
+      case 2048:
+        NGUITools.PlaySound(mergeTileSound2, 1);
+      break;
     }
   }
   

@@ -13,6 +13,8 @@ public class ResultPopup : Popup {
   // public UIEventTrigger btnShareTwitter;
   public UISprite title;
   public UISprite crowSprite;
+  public AudioClip endGameSound;
+  public AudioClip highScoreSound;
   
   private int highestTile;
   private int score;
@@ -43,6 +45,11 @@ public class ResultPopup : Popup {
     title.transform.localScale = new Vector3(0.7f, 0.7f, 1.0f);
     crowSprite.spriteName = "icon_" + highestTile;
     highScoreLabel.text = "[5e98a8]HIGHSCORE [f48426]" + PlayerPrefs.GetInt("highScore").ToString();
+    if (isHighScore) {
+      NGUITools.PlaySound(highScoreSound, 1);
+    } else {
+      NGUITools.PlaySound(endGameSound, 1);
+    }
   }
   
   private void ShareFacebook() {
