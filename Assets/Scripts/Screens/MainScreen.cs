@@ -20,7 +20,7 @@ public class MainScreen : BaseScreen {
 	public UIStretch dragPanelStretch;
 	public UIScrollView scrollView;
 	
-	private int achievementScore = 0;
+	private int achievementScore = 10000;
 	private int currentTheme = 0;
 
 	public override void Init() {
