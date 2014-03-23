@@ -88,7 +88,6 @@ public class MainScreen : BaseScreen {
 	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, OpenGameScreen);
 	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, PurchaseTheme);
 	        int score = PlayerPrefs.HasKey("totalScore") ? PlayerPrefs.GetInt("totalScore") : 0;
-	        Debug.Log(score);
 	        themeScripts[index].achievementProgress.value = (float)score / achievementScore;
 	      }
 	      btnPrevButton.isEnabled = true;
@@ -133,7 +132,6 @@ public class MainScreen : BaseScreen {
   
 	
 	private void PurchaseTheme() {
-	  Debug.Log("PurchaseTheme-" + currentTheme);
     //    GAEvent myEvent = new GAEvent("Purchase", "Click Purchase");
     // GoogleAnalytics.instance.Add(myEvent);
     // GoogleAnalytics.instance.Dispatch();

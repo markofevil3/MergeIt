@@ -30,6 +30,7 @@ public class PausePopup : Popup {
   }
   
   private void Quit() {
+    AdsManager.Instance.HideAds();
     GameManager.Instance.Close();
     CloseNoAnimation();
     ScreenManager.Instance.OpenMainScreen();
