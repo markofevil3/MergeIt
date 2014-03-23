@@ -89,6 +89,9 @@ public class GameManager : BaseScreen {
   }
   
   void StartGame() {
+    paused = false;
+    stopped = false;
+    isMoving = false;
     started = true;
   }
   

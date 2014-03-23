@@ -19,7 +19,6 @@ public class MainScreen : BaseScreen {
 	public UIPanel dragPanel;
 	public UIStretch dragPanelStretch;
 	public UIScrollView scrollView;
-	public UIProgressBar achievementProgress;
 	
 	private int achievementScore = 0;
 	private int currentTheme = 0;
@@ -89,6 +88,7 @@ public class MainScreen : BaseScreen {
 	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, OpenGameScreen);
 	        EventDelegate.Remove(themeScripts[index].btnPlay.onClick, PurchaseTheme);
 	        int score = PlayerPrefs.HasKey("totalScore") ? PlayerPrefs.GetInt("totalScore") : 0;
+	        Debug.Log(score);
 	        themeScripts[index].achievementProgress.value = (float)score / achievementScore;
 	      }
 	      btnPrevButton.isEnabled = true;

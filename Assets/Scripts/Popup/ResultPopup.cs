@@ -10,6 +10,7 @@ public class ResultPopup : Popup {
   public UIEventTrigger btnTryAgain;
   public UIEventTrigger btnQuit;
   public UIEventTrigger btnShareFacebook;
+  public UIButton shareFacebookUIButton;
   // public UIEventTrigger btnShareTwitter;
   public UISprite title;
   public UISprite crowSprite;
@@ -32,11 +33,18 @@ public class ResultPopup : Popup {
     if (isHighScore) {
       title.spriteName = "txt_newHighScore";
       highScoreStar.SetActive(true);
-      // Facebook.instance.postMessageWithLinkAndLinkToImage("You Got " + score + " points!",
-      //                                                     "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8",
-      //                                                     "Power of 2",
-      //                                                     "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
-      
+      #if UNITY_IPHONE
+  	  Facebook.instance.postMessageWithLinkAndLinkToImage("I got " + score + " points! Can you beat my score?",
+                                                          "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8",
+                                                          "Power of 2",
+                                                          "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
+      #endif
+      #if UNITY_ANDROID
+  	  Facebook.instance.postMessageWithLinkAndLinkToImage("I got " + score + " points! Can you beat my score?",
+                                                          "http://play.google.com/store/apps/details?id=com.buiphiquan.powerof2",
+                                                          "Power of 2",
+                                                          "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
+      #endif
     } else {
       title.spriteName = "txt_score";
       highScoreStar.SetActive(false);
@@ -53,10 +61,19 @@ public class ResultPopup : Popup {
   }
   
   private void ShareFacebook() {
+    #if UNITY_IPHONE
 	  Facebook.instance.postMessageWithLinkAndLinkToImage("I got " + score + " points! Can you beat my score?",
                                                         "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8",
                                                         "Power of 2",
                                                         "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
+    #endif
+    #if UNITY_ANDROID
+	  Facebook.instance.postMessageWithLinkAndLinkToImage("I got " + score + " points! Can you beat my score?",
+                                                        "http://play.google.com/store/apps/details?id=com.buiphiquan.powerof2",
+                                                        "Power of 2",
+                                                        "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
+    #endif
+    shareFacebookUIButton.isEnabled = false;
 		// 	  var parameters = new Dictionary<string,string>
 		// {
 		// 	{ "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
