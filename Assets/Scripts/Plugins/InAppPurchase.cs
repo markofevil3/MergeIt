@@ -13,7 +13,7 @@ public class InAppPurchase : MonoBehaviour {
 	
   #if UNITY_IPHONE
 	  
-  string[] productIdentifiers = new string[] { "jeweltheme", "candytheme" };
+  string[] productIdentifiers = new string[] { "jeweltheme" };
   private List<StoreKitProduct> products;
   
 	void Start()
