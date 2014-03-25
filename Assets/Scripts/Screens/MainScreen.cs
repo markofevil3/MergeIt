@@ -6,7 +6,6 @@ public class MainScreen : BaseScreen {
 
   public static MainScreen Instance { get; private set; }
 
-  public UIEventTrigger btnPlay;
 	public UIEventTrigger btnNext;
 	public UIEventTrigger btnPrev;
 	public UIButton btnNextButton;

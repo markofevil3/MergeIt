@@ -42,8 +42,6 @@ public class GameManager : BaseScreen {
 	public override void Init(int theme) {
 		Instance = this;
 		currentTheme = theme;
-    cellBackgroundStretch.Reset();
-    cellTableAnchor.Init();
 		cellSize = cellBackground.width * 100 / 486;
 		transform.GetComponent<GridManager>().Init(gameSize);
 		transform.GetComponent<TileManager>().Init();

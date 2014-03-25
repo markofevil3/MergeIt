@@ -15,7 +15,7 @@ public class Grid : MonoBehaviour {
     this.y = pos.y;
     this.gridValue = gridValue;
     background.atlas = GameManager.Instance.currentAtlas;
-    background.width = background.height = GameManager.Instance.cellSize;
+    // background.width = background.height = GameManager.Instance.cellSize;
   }
   
   public bool IsAvailable() {

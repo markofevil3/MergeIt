@@ -21,8 +21,8 @@ public class Tile : MonoBehaviour {
     this.tileValue = value;
     tileBackground.atlas = GameManager.Instance.currentAtlas;
     tileBackground.spriteName = "tile_" + value;
-    tileBackground.width = tileBackground.height = GameManager.Instance.cellSize;
-    glowingBackground.width = glowingBackground.height = (int)(GameManager.Instance.cellSize * 1.15f);
+    // tileBackground.width = tileBackground.height = GameManager.Instance.cellSize;
+    // glowingBackground.width = glowingBackground.height = (int)(GameManager.Instance.cellSize * 1.15f);
     // tileValueLabel.text = value.ToString();
     transform.position = transPos;
 		if (GameManager.Instance.currentTheme == 0 && tileValue >= glowingValue) {

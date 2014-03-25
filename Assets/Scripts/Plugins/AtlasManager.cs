@@ -32,9 +32,9 @@ public class AtlasManager : MonoBehaviour {
       if (Utils.IsSD()) {
         uiAtlasName = "HD";
   			theme1UI = "ThemeSD";
-  			theme2UI = "ThemeSD";
-  			theme3UI = "ThemeSD";
-  			theme4UI = "ThemeSD";
+  			theme2UI = "Theme2SD";
+  			theme3UI = "Theme3SD";
+  			theme4UI = "Theme4SD";
       } else {
         uiAtlasName = "HD";
   			theme1UI = "ThemeHD";

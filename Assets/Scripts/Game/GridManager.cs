@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour {
 
-  public UITable cellTable;
-  public UIAnchor cellTableAnchor;
+  public UIGrid cellTable;
   public GameObject cellPrefab;
 
   public static GridManager Instance { get; private set; }
@@ -26,8 +25,6 @@ public class GridManager : MonoBehaviour {
         cells[i, j] = tempGrid;
       }
     }
-    cellTableAnchor.Init();
-    cellTable.transform.localPosition = new Vector3(-(GameManager.Instance.cellSize * 4 + cellTable.padding.x * 8) / 2, (GameManager.Instance.cellSize * 4 + cellTable.padding.x * 8) / 2, 0);
     cellTable.Reset();
   }
 

@@ -4,7 +4,6 @@ using System.Collections;
 public class SettingPopup : Popup {
   
   public UIAnchor btnCloseAnchor;
-  public UIStretch backgroundStretch;
   public UIEventTrigger btnCredits;
   public UIEventTrigger btnClose;
   public UIEventTrigger btnMoreGame;
@@ -25,7 +24,6 @@ public class SettingPopup : Popup {
 		EventDelegate.Set (btnSound.onClick, SwitchSound);
 		EventDelegate.Set (btnBack.onClick, OpenSettingPanel);
 		EventDelegate.Set (btnMoreGame.onClick, OpenMoreGameLink);
-		backgroundStretch.Reset();
     btnCloseAnchor.Init();
     GameManager.paused = true;
     settingPanel.SetActive(true);

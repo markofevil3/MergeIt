@@ -61,7 +61,6 @@ public class ResultPopup : Popup {
       highScoreStar.SetActive(false);
     }
     title.MakePixelPerfect();
-    title.transform.localScale = new Vector3(0.7f, 0.7f, 1.0f);
     crowSprite.spriteName = "icon_" + highestTile;
     highScoreLabel.text = "[5e98a8]HIGHSCORE [f48426]" + PlayerPrefs.GetInt("highScore").ToString();
     if (isHighScore) {

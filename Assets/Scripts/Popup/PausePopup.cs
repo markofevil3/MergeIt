@@ -4,7 +4,6 @@ using System.Collections;
 public class PausePopup : Popup {
   
   public UIAnchor btnCloseAnchor;
-  public UIStretch backgroundStretch;
   public UIEventTrigger btnClose;
   public UIEventTrigger btnQuit;
   public UIEventTrigger btnSound;
@@ -15,7 +14,6 @@ public class PausePopup : Popup {
 		EventDelegate.Set (btnClose.onClick, Close);
 		EventDelegate.Set (btnQuit.onClick, Quit);
 		EventDelegate.Set (btnSound.onClick, SwitchSound);
-		backgroundStretch.Reset();
     btnCloseAnchor.Init();
     GameManager.paused = true;
     if (AudioManager.Instance != null) {
