@@ -29,11 +29,19 @@ public class AtlasManager : MonoBehaviour {
 			theme3UI = "Theme3UHD";
 			theme4UI = "Theme4UHD";
     } else {
-      uiAtlasName = "HD";
-			theme1UI = "ThemeHD";
-			theme2UI = "Theme2HD";
-			theme3UI = "Theme3HD";
-			theme4UI = "Theme4HD";
+      if (Utils.IsSD()) {
+        uiAtlasName = "HD";
+  			theme1UI = "ThemeSD";
+  			theme2UI = "ThemeSD";
+  			theme3UI = "ThemeSD";
+  			theme4UI = "ThemeSD";
+      } else {
+        uiAtlasName = "HD";
+  			theme1UI = "ThemeHD";
+  			theme2UI = "Theme2HD";
+  			theme3UI = "Theme3HD";
+  			theme4UI = "Theme4HD";
+      }
     }
     uiRef.replacement = (Resources.Load("Atlas/" + uiAtlasName + "/" + uiAtlasName, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();
     theme1UIRef.replacement = (Resources.Load("Atlas/" + theme1UI + "/" + theme1UI, typeof(GameObject)) as GameObject).GetComponent<UIAtlas>();

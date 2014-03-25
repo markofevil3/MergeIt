@@ -29,4 +29,11 @@ public class Utils : MonoBehaviour {
     }
   }
   
+  public static bool IsSD() {
+    if (Screen.width <= 480) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
