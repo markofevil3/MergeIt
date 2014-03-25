@@ -174,11 +174,14 @@ public class GoogleAnalyticsForApps
 	private IEnumerator WaitForRequest(WWW www)
     {	
         yield return www;
- 
+      
         // check for errors
         if (www.error != null)
         {
+          ScreenManager.internetAvailable = false;
             Debug.Log("WWW Error: "+ www.error);
-		}
+		    } else {
+		      ScreenManager.internetAvailable = true;
+		    }
     }	
 }

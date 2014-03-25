@@ -22,6 +22,7 @@ public class ResultPopup : Popup {
   
   public override void Init(object[] data) {
     base.Init(data);
+    ScreenManager.Instance.TrackScreen("ResultScreen");
     GameManager.stopped = true;
 		EventDelegate.Set (btnTryAgain.onClick, TryAgain);
 		EventDelegate.Set (btnQuit.onClick, Quit);
@@ -33,26 +34,28 @@ public class ResultPopup : Popup {
     if (isHighScore) {
       title.spriteName = "txt_newHighScore";
       highScoreStar.SetActive(true);
-      #if UNITY_IPHONE
-        var parameters = new Dictionary<string,string>
-        {
-          { "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
-          { "name", "Power of 2" },
-          { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
-          { "caption", "I got " + score + " points! Can you beat my score?" }
-        };
-        FacebookBinding.showDialog( "stream.publish", parameters );
-      #endif
-      #if UNITY_ANDROID
-        var parameters = new Dictionary<string,string>
-        {
-          { "link", "http://play.google.com/store/apps/details?id=com.buiphiquan.powerof2" },
-          { "name", "Power of 2" },
-          { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
-          { "caption", "I got " + score + " points! Can you beat my score?" }
-        };
-        FacebookAndroid.showDialog( "stream.publish", parameters );
-      #endif
+      if (ScreenManager.internetAvailable) {
+        #if UNITY_IPHONE
+          var parameters = new Dictionary<string,string>
+          {
+            { "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
+            { "name", "Power of 2" },
+            { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
+            { "caption", "I got " + score + " points! Can you beat my score?" }
+          };
+          FacebookBinding.showDialog( "stream.publish", parameters );
+        #endif
+        #if UNITY_ANDROID
+          var parameters = new Dictionary<string,string>
+          {
+            { "link", "http://play.google.com/store/apps/details?id=com.buiphiquan.powerof2" },
+            { "name", "Power of 2" },
+            { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
+            { "caption", "I got " + score + " points! Can you beat my score?" }
+          };
+          FacebookAndroid.showDialog( "stream.publish", parameters );
+        #endif
+      }
     } else {
       title.spriteName = "txt_score";
       highScoreStar.SetActive(false);
@@ -82,26 +85,31 @@ public class ResultPopup : Popup {
     //                                                         "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
     //     #endif
     // shareFacebookUIButton.isEnabled = false;
-    #if UNITY_IPHONE
-      var parameters = new Dictionary<string,string>
-      {
-        { "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
-        { "name", "Power of 2" },
-        { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
-        { "caption", "I got " + score + " points! Can you beat my score?" }
-      };
-      FacebookBinding.showDialog( "stream.publish", parameters );
-    #endif
-    #if UNITY_ANDROID
-      var parameters = new Dictionary<string,string>
-      {
-        { "link", "http://play.google.com/store/apps/details?id=com.buiphiquan.powerof2" },
-        { "name", "Power of 2" },
-        { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
-        { "caption", "I got " + score + " points! Can you beat my score?" }
-      };
-      FacebookAndroid.showDialog( "stream.publish", parameters );
-    #endif
+    if (ScreenManager.internetAvailable) {
+      shareFacebookUIButton.isEnabled = true;
+      #if UNITY_IPHONE
+        var parameters = new Dictionary<string,string>
+        {
+          { "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
+          { "name", "Power of 2" },
+          { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
+          { "caption", "I got " + score + " points! Can you beat my score?" }
+        };
+        FacebookBinding.showDialog( "stream.publish", parameters );
+      #endif
+      #if UNITY_ANDROID
+        var parameters = new Dictionary<string,string>
+        {
+          { "link", "http://play.google.com/store/apps/details?id=com.buiphiquan.powerof2" },
+          { "name", "Power of 2" },
+          { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
+          { "caption", "I got " + score + " points! Can you beat my score?" }
+        };
+        FacebookAndroid.showDialog( "stream.publish", parameters );
+      #endif
+    } else {
+      shareFacebookUIButton.isEnabled = false;
+    }
   }
   
   private void TryAgain() {

@@ -16,6 +16,8 @@ public class ScreenManager : MonoBehaviour {
 	public AtlasManager atlasManager;
 	public CGoogleAnalytics ga;
 	
+	public static bool internetAvailable = false;
+	
 	public bool isFbInit = false;
 
 	// Use this for initialization
