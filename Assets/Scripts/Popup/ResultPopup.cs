@@ -81,7 +81,7 @@ public class ResultPopup : Popup {
     //                                                         "Power of 2",
     //                                                         "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png", null, null);
     //     #endif
-    shareFacebookUIButton.isEnabled = false;
+    // shareFacebookUIButton.isEnabled = false;
     #if UNITY_IPHONE
       var parameters = new Dictionary<string,string>
       {

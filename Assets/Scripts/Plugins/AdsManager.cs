@@ -46,7 +46,9 @@ public class AdsManager : MonoBehaviour {
 
 	#if UNITY_ANDROID
 		public void HideAds() {
-	    GoogleMobileAdsPlugin.HideBannerView();
+		  if (Application.platform == RuntimePlatform.Android) {
+		    GoogleMobileAdsPlugin.HideBannerView();
+	 		}
 	  }
 	  void OnEnable() {
 		  GoogleMobileAdsPlugin.ReceivedAd += HandleReceivedAd;
