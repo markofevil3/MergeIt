@@ -93,17 +93,17 @@ public class MainScreen : BaseScreen {
 	      btnNextButton.isEnabled = true;
 	    break;
 	    case 2:
-        if (PlayerPrefs.HasKey("jeweltheme")) {
+        // if (PlayerPrefs.HasKey("jeweltheme")) {
     		  themeScripts[index].playText.SetActive(true);
           themeScripts[index].themeAchievement.SetActive(false);
           themeScripts[index].themePurchase.SetActive(false);
           EventDelegate.Set(themeScripts[index].btnPlay.onClick, OpenGameScreen);
-        } else {
-          themeScripts[index].playText.SetActive(false);
-          themeScripts[index].themeAchievement.SetActive(false);
-          themeScripts[index].themePurchase.SetActive(true);
-          EventDelegate.Set(themeScripts[index].btnPlay.onClick, PurchaseTheme);
-        }
+        // } else {
+        //   themeScripts[index].playText.SetActive(false);
+        //   themeScripts[index].themeAchievement.SetActive(false);
+        //   themeScripts[index].themePurchase.SetActive(true);
+        //   EventDelegate.Set(themeScripts[index].btnPlay.onClick, PurchaseTheme);
+        // }
     		btnPrevButton.isEnabled = true;
 	      btnNextButton.isEnabled = false;
 	    break;
