@@ -41,16 +41,16 @@ public class PlayerController : MonoBehaviour {
           gestureDist = (t.position - fingerStartPos).magnitude;
           if (isSwipe && gestureTime < maxSwipeTime && gestureDist > minSwipeDist) {
             Vector2 direction = t.position - fingerStartPos;
-            Vector2 swipeType = Vector2.zero;
+            Vector2 swipeType = Vector2.zero; 
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y)){
               // the swipe is horizontal:
               swipeType = Vector2.right * Mathf.Sign(direction.x);
               if (swipeType.x == 1) {
-                //RIGHT
-                GameManager.Instance.Move(GameManager.Direction.RIGHT);
-              } else {
                 //LEFT
                 GameManager.Instance.Move(GameManager.Direction.LEFT);
+              } else {
+                //RIGHT
+                GameManager.Instance.Move(GameManager.Direction.RIGHT);
               }
             } else {
               // the swipe is vertical:
@@ -127,11 +127,11 @@ public class PlayerController : MonoBehaviour {
 		  }
 		  //swipe left
 		  if (currentSwipe.x < 0 && currentSwipe.y > -dragThreshold && currentSwipe.y < dragThreshold) {
-			  GameManager.Instance.Move(GameManager.Direction.LEFT);
+			  GameManager.Instance.Move(GameManager.Direction.RIGHT);
 		  }
 		  //swipe right
 		  if (currentSwipe.x > 0 && currentSwipe.y > -dragThreshold && currentSwipe.y < dragThreshold) {
-			  GameManager.Instance.Move(GameManager.Direction.RIGHT);
+			  GameManager.Instance.Move(GameManager.Direction.LEFT);
 		  }
 		}
 	}
