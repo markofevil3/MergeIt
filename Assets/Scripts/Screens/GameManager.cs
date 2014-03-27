@@ -294,10 +294,10 @@ public class GameManager : BaseScreen {
         return new DirectionVector(0, 1);
       break;
       case Direction.LEFT:
-        return new DirectionVector(-1, 0);
+        return new DirectionVector(1, 0);
       break;
       case Direction.RIGHT:
-        return new DirectionVector(1, 0);
+        return new DirectionVector(-1, 0);
       break;
     }
     Debug.Log("Cant map direction");

@@ -38,11 +38,9 @@ public class ResultPopup : Popup {
       if (ScreenManager.internetAvailable) {
         #if UNITY_IPHONE
           var permissions = new string[] { "publish_actions", "publish_stream" };
-    			FacebookBinding.reauthorizeWithPublishPermissions( permissions, FacebookSessionDefaultAudience.Everyone );
-    			
           var parameters = new Dictionary<string,string>
           {
-            { "link", "http://www.google.com" },
+            { "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
             { "name", "Power of 2" },
             { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
             { "caption", "I got " + score + " points! Can you beat my score?" }
@@ -93,7 +91,7 @@ public class ResultPopup : Popup {
       #if UNITY_IPHONE
         var parameters = new Dictionary<string,string>
         {
-          { "link", "http://www.google.com" },
+          { "link", "https://itunes.apple.com/us/app/power-of-2/id841898323?ls=1&mt=8" },
           { "name", "Power of 2" },
           { "picture", "https://dl.dropboxusercontent.com/u/86872228/PowerOf2/logo.png" },
           { "caption", "I got " + score + " points! Can you beat my score?" }
