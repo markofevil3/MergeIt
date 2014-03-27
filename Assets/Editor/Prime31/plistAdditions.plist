@@ -17,6 +17,8 @@
       <string>FacebookDisplayName</string>
       <string>GPGApplicationID</string>
     </array>
+    <key>GPGApplicationID</key>
+    <string>223301687231</string>
     <key>UIFileSharingEnabled</key>
     <false />
     <key>UIViewControllerBasedStatusBarAppearance</key>
